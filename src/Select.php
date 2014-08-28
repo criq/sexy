@@ -40,11 +40,7 @@ class Select extends Expression {
 
 		} elseif (
 			count(func_get_args()) == 2
-<<<<<<< HEAD
 			&& func_get_arg(0) instanceof Expression
-=======
-			&& func_get_arg(0) instanceof \Katu\Pdo\Expression
->>>>>>> 0786f8f5c55227a0b06cbc3295cab4856a76cb8d
 			&& in_array(gettype(func_get_arg(1)), array('string', 'int', 'integer')) === TRUE
 		) {
 
@@ -67,22 +63,13 @@ class Select extends Expression {
 		$joinMethod = func_get_arg(0);
 
 		switch ($joinMethod) {
-<<<<<<< HEAD
 			case 'join':     $joinExpression = '\Sexy\Join';     break;
 			case 'leftJoin': $joinExpression = '\Sexy\LeftJoin'; break;
-=======
-			case 'join':     $joinExpression = '\Katu\Pdo\Expressions\Join';     break;
-			case 'leftJoin': $joinExpression = '\Katu\Pdo\Expressions\LeftJoin'; break;
->>>>>>> 0786f8f5c55227a0b06cbc3295cab4856a76cb8d
 		}
 
 		if (
 			count(func_get_args()) == 2
-<<<<<<< HEAD
-			&& func_get_arg(1) instanceof Expression
-=======
 			&& func_get_arg(1) instanceof \Katu\Pdo\Expression
->>>>>>> 0786f8f5c55227a0b06cbc3295cab4856a76cb8d
 		) {
 
 			return func_get_arg(1);
