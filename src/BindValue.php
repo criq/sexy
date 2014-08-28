@@ -1,14 +1,8 @@
 <?php
 
-<<<<<<< HEAD
 namespace Sexy;
 
 class BindValue extends Expression {
-=======
-namespace Katu\Pdo\Expressions;
-
-class BindValue extends \Katu\Pdo\Expression {
->>>>>>> 0786f8f5c55227a0b06cbc3295cab4856a76cb8d
 
 	const ANONYMOUS_NAME_HANDLE = 'anonBindValue';
 	const ANONYMOUS_NAME_PREG   = '#^anonBindValue([0-9]+)$#';
