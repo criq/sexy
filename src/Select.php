@@ -69,7 +69,7 @@ class Select extends Expression {
 
 		if (
 			count(func_get_args()) == 2
-			&& func_get_arg(1) instanceof \Katu\Pdo\Expression
+			&& func_get_arg(1) instanceof \Sexy\Expression
 		) {
 
 			return func_get_arg(1);
