@@ -1,8 +1,14 @@
 <?php
 
+<<<<<<< HEAD
 namespace Sexy;
 
 abstract class Cmp extends Expression {
+=======
+namespace Katu\Pdo\Expressions;
+
+abstract class Cmp extends \Katu\Pdo\Expression {
+>>>>>>> 0786f8f5c55227a0b06cbc3295cab4856a76cb8d
 
 	public $name;
 	public $value;
