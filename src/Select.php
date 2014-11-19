@@ -18,8 +18,10 @@ class Select extends Expression {
 	private $_optGetTotalRows = true;
 	private $_optPage;
 
-	public function __construct() {
-		call_user_func_array([$this, 'select'], func_get_args());
+	public function __construct(Expression $select = null) {
+		if ($select) {
+			call_user_func_array([$this, 'select'], func_get_args());
+		}
 
 		return $this;
 	}
