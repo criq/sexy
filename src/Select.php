@@ -28,44 +28,6 @@ class Select extends Expression {
 		$this->_optGetTotalRows = (bool) $bool;
 	}
 
-	static function __evaluateExpression() {
-		if (
-			count(func_get_args() == 2)
-			&& func_get_arg(0) instanceof Column
-			&& in_array(gettype(func_get_arg(1)), ['string', 'int', 'integer']) === true
-		) {
-
-			return new CmpEq(func_get_arg(0), new BindValue(null, func_get_arg(1)));
-
-		} elseif (
-			count(func_get_args()) == 2
-			&& is_string(func_get_arg(0))
-			&& in_array(gettype(func_get_arg(1)), ['string', 'int', 'integer']) === true
-		) {
-
-			return new CmpEq(new Alias(func_get_arg(0)), new BindValue(null, func_get_arg(1)));
-
-		} elseif (
-			count(func_get_args()) == 2
-			&& func_get_arg(0) instanceof Expression
-			&& in_array(gettype(func_get_arg(1)), ['string', 'int', 'integer']) === true
-		) {
-
-			return new CmpEq(func_get_arg(0), new BindValue(null, func_get_arg(1)));
-
-		} elseif (
-			count(func_get_args()) == 1
-		) {
-
-			return func_get_arg(0);
-
-		} else {
-
-			throw new \Katu\Exceptions\PdoExpressionErorException("Invalid arguments passed to expression.");
-
-		}
-	}
-
 	/**************************************************************************
 	 * Select.
 	 */
