@@ -114,7 +114,7 @@ class Select extends Expression {
 	}
 
 	public function joinColumns(Column $ownColumn, Column $foreignColumn) {
-		return $this->join(new Join($ownColumn->getTable(), new CmpEq($ownColumn, $foreignColumn)));
+		return $this->join(new Join($foreignColumn->getTable(), new CmpEq($ownColumn, $foreignColumn)));
 	}
 
 	public function joinSubquery(Column $ownColumn, $subqueryAlias, $foreignColumn, Select $subquery, Keyword $direction = null) {
