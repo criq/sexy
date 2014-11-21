@@ -45,8 +45,12 @@ class Select extends Expression {
 		return $this;
 	}
 
-	public function select(Expression $expression) {
-		return $this->addSelectExpression($expression);
+	public function select($expressions) {
+		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
+			$this->addSelectExpression($expression);
+		}
+
+		return $this;
 	}
 
 	/**************************************************************************
@@ -59,8 +63,12 @@ class Select extends Expression {
 		return $this;
 	}
 
-	public function from(Expression $expression) {
-		return $this->addFromExpression($expression);
+	public function from($expressions) {
+		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
+			$this->addFromExpression($expression);
+		}
+
+		return $this;
 	}
 
 	/**************************************************************************
@@ -73,8 +81,12 @@ class Select extends Expression {
 		return $this;
 	}
 
-	public function join(Expression $expression) {
-		return $this->addJoinExpression($expression);
+	public function join($expressions) {
+		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
+			$this->addJoinExpression($expression);
+		}
+
+		return $this;
 	}
 
 	public function joinColumns(Column $ownColumn, Column $foreignColumn) {
@@ -99,8 +111,20 @@ class Select extends Expression {
 		return $this;
 	}
 
-	public function where(Expression $expression) {
-		return $this->addWhereExpression($expression);
+	public function where($expressions) {
+		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
+			$this->addWhereExpression($expression);
+		}
+
+		return $this;
+	}
+
+	public function whereEq($name, $value) {
+		return $this->addWhereExpression(new CmpEq($name, $value));
+	}
+
+	public function whereIn($name, $value) {
+		return $this->addWhereExpression(new CmpIn($name, $value));
 	}
 
 	public function whereOr(array $expressions) {
@@ -117,8 +141,12 @@ class Select extends Expression {
 		return $this;
 	}
 
-	public function groupBy(Expression $expression) {
-		return $this->addGroupByExpression($expression);
+	public function groupBy($expressions) {
+		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
+			$this->addGroupByExpression($expression);
+		}
+
+		return $this;
 	}
 
 	/**************************************************************************
@@ -131,8 +159,10 @@ class Select extends Expression {
 		return $this;
 	}
 
-	public function having(Expression $expression) {
-		$this->addHavingExpression($expression);
+	public function having($expressions) {
+		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
+			$this->addHavingExpression($expression);
+		}
 
 		return $this;
 	}
@@ -147,8 +177,10 @@ class Select extends Expression {
 		return $this;
 	}
 
-	public function orderBy(Expression $expression) {
-		$this->addOrderByExpression($expression);
+	public function orderBy($expressions) {
+		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
+			$this->addOrderByExpression($expression);
+		}
 
 		return $this;
 	}
