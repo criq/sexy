@@ -13,7 +13,7 @@ class GroupBy extends Expression {
 	}
 
 	public function getSql(&$context = []) {
-		return $this->groupBy->getSql($context) . " " . $this->direction->getSql($context);
+		return $this->groupBy->getSql($context) . " " . ($this->direction ? $this->direction->getSql($context) : null);
 	}
 
 }
