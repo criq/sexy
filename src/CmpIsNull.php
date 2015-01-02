@@ -9,7 +9,7 @@ class CmpIsNull extends Expression {
 	}
 
 	public function getSql(&$context = []) {
-		return " ( " . $this->name->getSql($context) . " IS null ) ";
+		return " ( " . $this->name->getSql($context) . " IS NULL ) ";
 	}
 
 }
