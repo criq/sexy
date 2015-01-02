@@ -21,7 +21,7 @@ class Join extends Expression {
 	}
 
 	public function getSql(&$context = []) {
-		return ($this->direction ? $this->direction->getSql($context) : null) . " JOIN ( " . $this->join->getSql($context) . " ) " . ($this->alias ? " AS " . $this->alias->getSql($context) : null) . " ON ( " . $this->conditions->getSql($context) . " ) ";
+		return (!is_null($this->direction) ? $this->direction->getSql($context) : null) . " JOIN ( " . $this->join->getSql($context) . " ) " . (!is_null($this->alias) ? " AS " . $this->alias->getSql($context) : null) . " ON ( " . $this->conditions->getSql($context) . " ) ";
 	}
 
 }

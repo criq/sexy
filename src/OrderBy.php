@@ -13,7 +13,7 @@ class OrderBy extends Expression {
 	}
 
 	public function getSql(&$context = []) {
-		return $this->orderBy->getSql($context) . " " . ($this->direction ? $this->direction->getSql($context) : null);
+		return $this->orderBy->getSql($context) . " " . (!is_null($this->direction) ? $this->direction->getSql($context) : null);
 	}
 
 }

@@ -15,7 +15,7 @@ class Cast extends Expression {
 	}
 
 	public function getSql(&$context = []) {
-		return " CAST( " . $this->expression->getSql($context) . " AS " . strtoupper($this->type->getSql($context)) . " ) " . ($this->alias ? " AS " . $this->alias->getSql($context) : null);
+		return " CAST( " . $this->expression->getSql($context) . " AS " . strtoupper($this->type->getSql($context)) . " ) " . (!is_null($this->alias) ? " AS " . $this->alias->getSql($context) : null);
 	}
 
 }
