@@ -45,8 +45,6 @@ class Page {
 			return " " . $this->getOffset() . ", " . $this->getLimit() . " ";
 
 		}
-
-
 	}
 
 }
