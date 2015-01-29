@@ -254,7 +254,7 @@ class Select extends Expression {
 			$this->addExpressions($expressions);
 		}
 
-		return true;
+		return $this;
 	}
 
 	/**************************************************************************
