@@ -213,54 +213,48 @@ class Select extends Expression {
 	 * Options.
 	 */
 
-<<<<<<< HEAD
-	public function setOptions($options = []) {
-		if (isset($options['select']) && $options['select']) {
-			$this->select($options['select']);
-		}
-
-		if (isset($options['where']) && $options['where']) {
-			$this->where($options['where']);
-		}
-
-		if (isset($options['groupBy']) && $options['groupBy']) {
-			$this->groupBy($options['groupBy']);
-		}
-
-		if (isset($options['having']) && $options['having']) {
-			$this->having($options['having']);
-		}
-
-		if (isset($options['orderBy']) && $options['orderBy']) {
-			$this->orderBy($options['orderBy']);
-		}
-
-		if (isset($options['page']) && $options['page']) {
-			$this->setPage($options['page']);
-=======
 	public function setExpressions($expressions = []) {
-		if (isset($expressions['select'])) {
+		if (isset($expressions['select']) && $expressions['select']) {
 			$this->select($expressions['select']);
 		}
 
-		if (isset($expressions['groupBy'])) {
+		if (isset($expressions['from']) && $expressions['from']) {
+			$this->select($expressions['from']);
+		}
+
+		if (isset($expressions['join']) && $expressions['join']) {
+			$this->select($expressions['join']);
+		}
+
+		if (isset($expressions['where']) && $expressions['where']) {
+			$this->select($expressions['where']);
+		}
+
+		if (isset($expressions['groupBy']) && $expressions['groupBy']) {
 			$this->groupBy($expressions['groupBy']);
 		}
 
-		if (isset($expressions['having'])) {
+		if (isset($expressions['having']) && $expressions['having']) {
 			$this->having($expressions['having']);
 		}
 
-		if (isset($expressions['orderBy'])) {
+		if (isset($expressions['orderBy']) && $expressions['orderBy']) {
 			$this->orderBy($expressions['orderBy']);
 		}
 
-		if (isset($expressions['page'])) {
+		if (isset($expressions['page']) && $expressions['page']) {
 			$this->setPage($expressions['page']);
->>>>>>> ad2b5028a1383343cd6f7a91c6dd08dc826d5b28
 		}
 
 		return $this;
+	}
+
+	public function setExpressionArrays($expressionArrays = []) {
+		foreach ((array) $expressionArrays as $expressionArray) {
+			$this->setExpressions($expressionArray);
+		}
+
+		return true;
 	}
 
 	/**************************************************************************
