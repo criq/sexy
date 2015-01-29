@@ -27,7 +27,7 @@ class Select extends Expression {
 	}
 
 	public function __toString() {
-		return $this->getSql();
+		return $this->getSqlWithValues();
 	}
 
 	public function setOptGetTotalRows($bool) {
@@ -214,23 +214,27 @@ class Select extends Expression {
 	 */
 
 	public function setOptions($options = []) {
-		if (isset($options['select'])) {
+		if (isset($options['select']) && $options['select']) {
 			$this->select($options['select']);
 		}
 
-		if (isset($options['groupBy'])) {
+		if (isset($options['where']) && $options['where']) {
+			$this->where($options['where']);
+		}
+
+		if (isset($options['groupBy']) && $options['groupBy']) {
 			$this->groupBy($options['groupBy']);
 		}
 
-		if (isset($options['having'])) {
+		if (isset($options['having']) && $options['having']) {
 			$this->having($options['having']);
 		}
 
-		if (isset($options['orderBy'])) {
+		if (isset($options['orderBy']) && $options['orderBy']) {
 			$this->orderBy($options['orderBy']);
 		}
 
-		if (isset($options['page'])) {
+		if (isset($options['page']) && $options['page']) {
 			$this->setPage($options['page']);
 		}
 
