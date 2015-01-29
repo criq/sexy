@@ -213,21 +213,21 @@ class Select extends Expression {
 	 * Options.
 	 */
 
-	public function setExpressions($expressions = []) {
+	public function addExpressions($expressions = []) {
 		if (isset($expressions['select']) && $expressions['select']) {
 			$this->select($expressions['select']);
 		}
 
 		if (isset($expressions['from']) && $expressions['from']) {
-			$this->select($expressions['from']);
+			$this->from($expressions['from']);
 		}
 
 		if (isset($expressions['join']) && $expressions['join']) {
-			$this->select($expressions['join']);
+			$this->join($expressions['join']);
 		}
 
 		if (isset($expressions['where']) && $expressions['where']) {
-			$this->select($expressions['where']);
+			$this->where($expressions['where']);
 		}
 
 		if (isset($expressions['groupBy']) && $expressions['groupBy']) {
@@ -249,9 +249,9 @@ class Select extends Expression {
 		return $this;
 	}
 
-	public function setExpressionArrays($expressionArrays = []) {
-		foreach ((array) $expressionArrays as $expressionArray) {
-			$this->setExpressions($expressionArray);
+	public function addExpressionArrays($expressionArrays = []) {
+		foreach ((array) $expressionArrays as $expressions) {
+			$this->addExpressions($expressions);
 		}
 
 		return true;
