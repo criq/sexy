@@ -213,6 +213,7 @@ class Select extends Expression {
 	 * Options.
 	 */
 
+<<<<<<< HEAD
 	public function setOptions($options = []) {
 		if (isset($options['select']) && $options['select']) {
 			$this->select($options['select']);
@@ -236,6 +237,27 @@ class Select extends Expression {
 
 		if (isset($options['page']) && $options['page']) {
 			$this->setPage($options['page']);
+=======
+	public function setExpressions($expressions = []) {
+		if (isset($expressions['select'])) {
+			$this->select($expressions['select']);
+		}
+
+		if (isset($expressions['groupBy'])) {
+			$this->groupBy($expressions['groupBy']);
+		}
+
+		if (isset($expressions['having'])) {
+			$this->having($expressions['having']);
+		}
+
+		if (isset($expressions['orderBy'])) {
+			$this->orderBy($expressions['orderBy']);
+		}
+
+		if (isset($expressions['page'])) {
+			$this->setPage($expressions['page']);
+>>>>>>> ad2b5028a1383343cd6f7a91c6dd08dc826d5b28
 		}
 
 		return $this;
