@@ -205,6 +205,12 @@ class Select extends Expression {
 		return $this;
 	}
 
+	public function setForTotal() {
+		$this->setPage(new Page(1, 1));
+
+		return $this;
+	}
+
 	public function getPage() {
 		return $this->_optPage;
 	}
