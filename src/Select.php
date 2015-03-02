@@ -46,8 +46,6 @@ class Select extends Expression {
 			$expression = new Column($expression, "*");
 		}
 
-		$this->select[] = $expression;
-
 		return $this;
 	}
 
