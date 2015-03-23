@@ -26,10 +26,6 @@ class Select extends Expression {
 		return $this;
 	}
 
-	public function __toString() {
-		return $this->getSqlWithValues();
-	}
-
 	public function setOptGetTotalRows($bool) {
 		$this->_optGetTotalRows = (bool) $bool;
 
