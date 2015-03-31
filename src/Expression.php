@@ -14,4 +14,8 @@ abstract class Expression {
 		return $this->getSql($context);
 	}
 
+	public function __toString() {
+		return $this->getSqlWithValues();
+	}
+
 }
