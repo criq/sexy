@@ -255,6 +255,13 @@ class Select extends Expression {
 			$this->setPage($expressions['page']);
 		}
 
+<<<<<<< HEAD
+=======
+		if (isset($expressions['getTotalRows']) && $expressions['getTotalRows']) {
+			$this->setOptGetTotalRows(true);
+		}
+
+>>>>>>> 2e7e7947bf604b59c70fc1d5855092d7c050d7ea
 		return $this;
 	}
 
