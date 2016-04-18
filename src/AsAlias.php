@@ -13,7 +13,7 @@ class AsAlias extends Expression {
 	}
 
 	public function getSql(&$context = []) {
-		return " " . $this->expression->getSql($context) . " AS " . $this->alias->getSql($context) . " ";
+		return " ( " . $this->expression->getSql($context) . " ) AS " . $this->alias->getSql($context) . " ";
 	}
 
 }
