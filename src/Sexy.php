@@ -5,11 +5,7 @@ namespace Sexy;
 class Sexy {
 
 	static function __callStatic($name, $args) {
-<<<<<<< HEAD
 		$class = new \ReflectionClass("\\Sexy\\" . ucfirst($name));
-=======
-		$class = new \ReflectionClass("\\Sexy\\" . $name);
->>>>>>> f099d7a5669b687fbcc8f021d38bd6201dab8a4a
 		return $class->newInstanceArgs($args);
 	}
 
