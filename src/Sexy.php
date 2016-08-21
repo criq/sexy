@@ -10,23 +10,23 @@ class Sexy {
 	}
 
 	static function a() {
-		return static::Alias(...func_get_args());
+		return call_user_func_array('static::Alias', func_get_args());
 	}
 
 	static function aka() {
-		return static::AsAlias(...func_get_args());
+		return call_user_func_array('static::AsAlias', func_get_args());
 	}
 
 	static function kw() {
-		return static::Keyword(...func_get_args());
+		return call_user_func_array('static::Keyword', func_get_args());
 	}
 
 	static function val() {
-		return static::BindValue(...func_get_args());
+		return call_user_func_array('static::BindValue', func_get_args());
 	}
 
 	static function eq() {
-		return static::CmpEq(...func_get_args());
+		return call_user_func_array('static::CmpEq', func_get_args());
 	}
 
 }
