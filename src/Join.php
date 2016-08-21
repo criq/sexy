@@ -9,7 +9,7 @@ class Join extends Expression {
 	public $conditions;
 	public $alias;
 
-	public function __construct(Expression $join, Expression $conditions, Keyword $direction = null, Alias $alias = null) {
+	public function __construct(Expression $join, Expression $conditions = null, Keyword $direction = null, Alias $alias = null) {
 		$this->direction  = $direction;
 		$this->join       = $join;
 		$this->conditions = $conditions;
@@ -21,7 +21,7 @@ class Join extends Expression {
 	}
 
 	public function getSql(&$context = []) {
-		return (!is_null($this->direction) ? $this->direction->getSql($context) : null) . " JOIN " . ($this->join instanceof Select ? " ( " : null) . $this->join->getSql($context) . " " . ($this->join instanceof Select ? " ) " : null) . " " . (!is_null($this->alias) ? " AS " . $this->alias->getSql($context) : null) . " ON ( " . $this->conditions->getSql($context) . " ) ";
+		return (!is_null($this->direction) ? $this->direction->getSql($context) : null) . " JOIN " . ($this->join instanceof Select ? " ( " : null) . $this->join->getSql($context) . " " . ($this->join instanceof Select ? " ) " : null) . " " . (!is_null($this->alias) ? " AS " . $this->alias->getSql($context) : null) . ($this->conditions ? " ON ( " . $this->conditions->getSql($context) . " ) " : null);
 	}
 
 }
