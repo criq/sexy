@@ -3,7 +3,7 @@
 	"description": "sexy sql expressions",
 	"type": "library",
 	"require" : {
-		"php": ">=7",
+		"php": ">=5.3.0",
 		"jabli/katu": "^2"
 	},
 	"minimum-stability": "dev",
