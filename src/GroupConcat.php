@@ -23,7 +23,7 @@ class GroupConcat extends Expression {
 		}
 		$sql .=  $this->column->getSql($context);
 		if ($this->orderBy) {
-			$sql .= " ORDER BY " . $this->orderBy . " ";
+			$sql .= " ORDER BY " . $this->orderBy->getSql($context) . " ";
 		}
 		if ($this->separator) {
 			$sql .= " SEPARATOR '" . $this->separator . "' ";
