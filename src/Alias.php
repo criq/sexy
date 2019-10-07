@@ -7,7 +7,11 @@ class Alias extends Expression {
 	public $alias;
 
 	public function __construct($alias = null) {
-		$this->alias = (string) $alias;
+		$this->alias = $alias instanceof static ? $alias->getAlias() : (string)$alias;
+	}
+
+	public function getAlias() {
+		return $this->alias;
 	}
 
 	public function getSql(&$context = []) {

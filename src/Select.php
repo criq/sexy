@@ -46,7 +46,7 @@ class Select extends Expression {
 	private function addSelectExpression(Expression $expression) {
 		// Translate table to all columns.
 		if ($expression instanceof Table) {
-			$expression = new Column($expression, "*");
+			$expression = new AllTableColumns($expression);
 		}
 
 		$this->select[] = $expression;
