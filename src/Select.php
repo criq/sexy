@@ -342,4 +342,28 @@ class Select extends Expression {
 		return isset($context['bindValues']) ? (array) $context['bindValues'] : [];
 	}
 
+	public function getAvailableTables() {
+		$tables = [];
+
+		foreach ($this->from as $from) {
+			if ($from instanceof \Katu\PDO\TableBase) {
+				$tables[] = $from;
+			}
+		}
+
+		foreach ($this->join as $join) {
+			if ($join->join instanceof \Katu\PDO\TableBase) {
+				$tables[] = $join->join;
+			}
+		}
+
+		return $tables;
+	}
+
+	public function getAvailableTableNames() {
+		return array_map(function($table) {
+			return $table->getName();
+		}, $this->getAvailableTables());
+	}
+
 }
