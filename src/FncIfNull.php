@@ -2,10 +2,10 @@
 
 namespace Sexy;
 
-class FncAbs extends Fnc {
+class FncIfNull extends Fnc {
 
 	public function __construct(array $arguments = [], Alias $alias = null) {
-		return parent::__construct(new Keyword('abs'), $arguments, $alias);
+		return parent::__construct(new Keyword('ifnull'), $arguments, $alias);
 	}
 
 }
