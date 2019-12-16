@@ -5,10 +5,11 @@ namespace Sexy;
 class BindValue extends Expression {
 
 	const ANONYMOUS_NAME_HANDLE = 'anonymousBindValue';
-	const ANONYMOUS_NAME_PREG   = '#^anonymousBindValue([0-9]+)$#';
 
 	public $name;
 	public $value;
+
+	static $anonymousId = 1;
 
 	public function __construct() {
 		if (count(func_get_args()) == 1) {
@@ -20,35 +21,8 @@ class BindValue extends Expression {
 		}
 	}
 
-	public function getAnonymousNames($context) {
-		if (!isset($context['bindValues'])) {
-			return [];
-		}
-
-		$names = [];
-
-		foreach ($context['bindValues'] as $name => $value) {
-			if (preg_match(static::ANONYMOUS_NAME_PREG, $name)) {
-				$names[] = $name;
-			}
-		}
-
-		return $names;
-	}
-
 	public function getFreeAnonymousId($context) {
-		$ids = [];
-
-		foreach ($this->getAnonymousNames($context) as $name) {
-			preg_match(static::ANONYMOUS_NAME_PREG, $name, $match);
-			$ids[] = $match[1];
-		}
-
-		if (!$ids) {
-			return 1;
-		}
-
-		return max($ids) + 1;
+		return static::$anonymousId++;
 	}
 
 	public function getSql(&$context = []) {
