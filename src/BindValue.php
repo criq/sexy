@@ -6,10 +6,10 @@ class BindValue extends Expression {
 
 	const ANONYMOUS_NAME_HANDLE = 'anonymousBindValue';
 
+	static $anonymousId = 0;
+
 	public $name;
 	public $value;
-
-	static $anonymousId = 1;
 
 	public function __construct() {
 		if (count(func_get_args()) == 1) {
@@ -21,7 +21,7 @@ class BindValue extends Expression {
 		}
 	}
 
-	public function getFreeAnonymousId($context) {
+	public function getAnonymousId() {
 		return static::$anonymousId++;
 	}
 
@@ -41,8 +41,8 @@ class BindValue extends Expression {
 			if ($useBindValues) {
 
 				// Anonymous assignment.
-				if (is_null($this->name)) {
-					$this->name = static::ANONYMOUS_NAME_HANDLE . $this->getFreeAnonymousId($context);
+				if (!$this->name) {
+					$this->name = static::ANONYMOUS_NAME_HANDLE . $this->getAnonymousId();
 				}
 
 				$context['bindValues'][$this->name] = $this->value;
