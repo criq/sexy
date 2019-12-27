@@ -25,6 +25,10 @@ class Sexy {
 		return call_user_func_array('static::BindValue', func_get_args());
 	}
 
+	static function placeholder() {
+		return call_user_func_array('static::BindValuePlaceholder', func_get_args());
+	}
+
 	static function eq() {
 		return call_user_func_array('static::CmpEq', func_get_args());
 	}
