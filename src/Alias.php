@@ -16,7 +16,7 @@ class Alias extends Expression {
 
 	public function getSql(&$context = []) {
 		return implode('.', array_map(function($i) {
-			return "`" . $i . "`";
+			return $i == '*' ? '*' : "`" . $i . "`";
 		}, explode('.', trim($this->alias, "`"))));
 	}
 
