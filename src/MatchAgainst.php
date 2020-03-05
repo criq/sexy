@@ -2,13 +2,14 @@
 
 namespace Sexy;
 
-class MatchAgainst extends Expression {
-
-	public $match;
+class MatchAgainst extends Expression
+{
 	public $against;
+	public $match;
 	public $modifier;
 
-	public function __construct($match, $against) {
+	public function __construct($match, $against)
+	{
 		$this->match = $match;
 
 		if ($against instanceof Expression) {
@@ -18,9 +19,10 @@ class MatchAgainst extends Expression {
 		}
 	}
 
-	public function getSql(&$context = []) {
+	public function getSql(&$context = [])
+	{
 		$sql  = " MATCH ";
-		$sql .= implode(", ", array_map(function($i) use(&$context) {
+		$sql .= implode(", ", array_map(function ($i) use (&$context) {
 			return $i->getSql($context);
 		}, $this->match));
 		$sql .= " AGAINST ( " . $this->against->getSql($context) . " " . $this->modifier . " ) ";
@@ -28,10 +30,10 @@ class MatchAgainst extends Expression {
 		return $sql;
 	}
 
-	public function setBooleanMode() {
+	public function setBooleanMode()
+	{
 		$this->modifier = " IN BOOLEAN MODE ";
 
 		return $this;
 	}
-
 }

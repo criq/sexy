@@ -2,9 +2,10 @@
 
 namespace Sexy;
 
-class CmpLikeAllWords extends Cmp {
-
-	public function getSql(&$context = []) {
+class CmpLikeAllWords extends Cmp
+{
+	public function getSql(&$context = [])
+	{
 		$wordSqls = [];
 		foreach (preg_split('#\s#', trim($this->value->value)) as $pattern) {
 			$wordSqls[] = new CmpLike($this->name, '%' . $pattern . '%');
@@ -12,5 +13,4 @@ class CmpLikeAllWords extends Cmp {
 
 		return (new LgcAnd($wordSqls))->getSql($context);
 	}
-
 }

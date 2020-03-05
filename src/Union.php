@@ -2,19 +2,22 @@
 
 namespace Sexy;
 
-class Union extends Expression {
-
+class Union extends Expression
+{
 	public $arguments;
 
-	public function __construct($arguments = []) {
+	public function __construct($arguments = [])
+	{
 		$this->arguments = is_array($arguments) ? $arguments : [$arguments];
 	}
 
-	public function addArgument($argument) {
+	public function addArgument($argument)
+	{
 		return $this->arguments[] = $argument;
 	}
 
-	public function getSql(&$context = []) {
+	public function getSql(&$context = [])
+	{
 		$sqls = [];
 
 		foreach ($this->arguments as $argument) {
@@ -23,5 +26,4 @@ class Union extends Expression {
 
 		return implode(" UNION ", $sqls);
 	}
-
 }

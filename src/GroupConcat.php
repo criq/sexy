@@ -2,21 +2,23 @@
 
 namespace Sexy;
 
-class GroupConcat extends Expression {
-
+class GroupConcat extends Expression
+{
 	public $column;
+	public $distinct;
 	public $orderBy;
 	public $separator;
-	public $distinct;
 
-	public function __construct(Expression $column, Expression $orderBy = null, $separator = null, $distinct = false) {
+	public function __construct(Expression $column, Expression $orderBy = null, $separator = null, $distinct = false)
+	{
 		$this->column    = $column;
 		$this->orderBy   = $orderBy;
 		$this->separator = $separator;
 		$this->distinct  = $distinct;
 	}
 
-	public function getSql(&$context = []) {
+	public function getSql(&$context = [])
+	{
 		$sql = " GROUP_CONCAT( ";
 		if ($this->distinct) {
 			$sql .= " DISTINCT ";
@@ -32,5 +34,4 @@ class GroupConcat extends Expression {
 
 		return $sql;
 	}
-
 }

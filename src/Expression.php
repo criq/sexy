@@ -2,11 +2,12 @@
 
 namespace Sexy;
 
-abstract class Expression {
-
+abstract class Expression
+{
 	abstract public function getSql(&$context = []);
 
-	public function getSqlWithValues() {
+	public function getSqlWithValues()
+	{
 		$context = [
 			'useBindValues' => false,
 		];
@@ -14,8 +15,8 @@ abstract class Expression {
 		return $this->getSql($context);
 	}
 
-	public function __toString() {
+	public function __toString()
+	{
 		return $this->getSqlWithValues();
 	}
-
 }

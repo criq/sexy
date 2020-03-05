@@ -2,16 +2,17 @@
 
 namespace Sexy;
 
-class JsonPath extends Expression {
-
+class JsonPath extends Expression
+{
 	public $jsonPath;
 
-	public function __construct($jsonPath = null) {
+	public function __construct($jsonPath = null)
+	{
 		$this->jsonPath = (string)ltrim($jsonPath, "$.");
 	}
 
-	public function getSql(&$context = []) {
+	public function getSql(&$context = [])
+	{
 		return new BindValue("$." . $this->jsonPath);
 	}
-
 }

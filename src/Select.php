@@ -2,24 +2,24 @@
 
 namespace Sexy;
 
-use \Katu\Pdo\Table;
 use \Katu\Pdo\Column;
+use \Katu\Pdo\Table;
 
-class Select extends Expression {
-
-	public $select   = [];
+class Select extends Expression
+{
+	private $_optDistinct = false;
+	private $_optGetTotalRows = true;
+	private $_optPage;
 	public $from     = [];
-	public $join     = [];
-	public $where    = [];
 	public $groupBy  = [];
 	public $having   = [];
+	public $join     = [];
 	public $orderBy  = [];
+	public $select   = [];
+	public $where    = [];
 
-	private $_optGetTotalRows = true;
-	private $_optDistinct = false;
-	private $_optPage;
-
-	public function __construct(Expression $select = null) {
+	public function __construct(Expression $select = null)
+	{
 		if ($select) {
 			call_user_func_array([$this, 'select'], func_get_args());
 		}
@@ -27,13 +27,15 @@ class Select extends Expression {
 		return $this;
 	}
 
-	public function setOptGetTotalRows($bool) {
+	public function setOptGetTotalRows($bool)
+	{
 		$this->_optGetTotalRows = (bool) $bool;
 
 		return $this;
 	}
 
-	public function setDistinct($bool = true) {
+	public function setDistinct($bool = true)
+	{
 		$this->_optDistinct = (bool) $bool;
 
 		return $this;
@@ -42,8 +44,8 @@ class Select extends Expression {
 	/**************************************************************************
 	 * Select.
 	 */
-
-	private function addSelectExpression(Expression $expression) {
+	private function addSelectExpression(Expression $expression)
+	{
 		// Translate table to all columns.
 		if ($expression instanceof Table) {
 			$expression = new AllTableColumns($expression);
@@ -54,7 +56,8 @@ class Select extends Expression {
 		return $this;
 	}
 
-	public function select($expressions) {
+	public function select($expressions)
+	{
 		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
 			$this->addSelectExpression($expression);
 		}
@@ -65,14 +68,15 @@ class Select extends Expression {
 	/**************************************************************************
 	 * From.
 	 */
-
-	private function addFromExpression(Expression $expression) {
+	private function addFromExpression(Expression $expression)
+	{
 		$this->from[] = $expression;
 
 		return $this;
 	}
 
-	public function from($expressions) {
+	public function from($expressions)
+	{
 		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
 			$this->addFromExpression($expression);
 		}
@@ -83,14 +87,15 @@ class Select extends Expression {
 	/**************************************************************************
 	 * Join.
 	 */
-
-	private function addJoinExpression(Expression $expression) {
+	private function addJoinExpression(Expression $expression)
+	{
 		$this->join[] = $expression;
 
 		return $this;
 	}
 
-	public function join($expressions) {
+	public function join($expressions)
+	{
 		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
 			$this->addJoinExpression($expression);
 		}
@@ -98,33 +103,38 @@ class Select extends Expression {
 		return $this;
 	}
 
-	public function joinColumns(Column $ownColumn, Column $foreignColumn) {
+	public function joinColumns(Column $ownColumn, Column $foreignColumn)
+	{
 		return $this->join(new Join($foreignColumn->getTable(), new CmpEq($ownColumn, $foreignColumn)));
 	}
 
-	public function leftJoinColumns(Column $ownColumn, Column $foreignColumn) {
+	public function leftJoinColumns(Column $ownColumn, Column $foreignColumn)
+	{
 		return $this->join(new Join($foreignColumn->getTable(), new CmpEq($ownColumn, $foreignColumn), new Keyword("left")));
 	}
 
-	public function joinSubquery(Column $ownColumn, $subqueryAlias, $foreignColumn, Expression $subquery, Keyword $direction = null) {
+	public function joinSubquery(Column $ownColumn, $subqueryAlias, $foreignColumn, Expression $subquery, Keyword $direction = null)
+	{
 		return $this->join(new Join($subquery, new CmpEq($ownColumn, new Alias(implode('.', [$subqueryAlias, $foreignColumn]))), $direction, new Alias($subqueryAlias)));
 	}
 
-	public function leftJoinSubquery(Column $ownColumn, $subqueryAlias, $foreignColumn, Expression $subquery) {
+	public function leftJoinSubquery(Column $ownColumn, $subqueryAlias, $foreignColumn, Expression $subquery)
+	{
 		return $this->joinSubquery($ownColumn, $subqueryAlias, $foreignColumn, $subquery, new Keyword("left"));
 	}
 
 	/**************************************************************************
 	 * Where.
 	 */
-
-	private function addWhereExpression(Expression $expression) {
+	private function addWhereExpression(Expression $expression)
+	{
 		$this->where[] = $expression;
 
 		return $this;
 	}
 
-	public function where($expressions) {
+	public function where($expressions)
+	{
 		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
 			$this->addWhereExpression($expression);
 		}
@@ -132,29 +142,33 @@ class Select extends Expression {
 		return $this;
 	}
 
-	public function whereEq($name, $value) {
+	public function whereEq($name, $value)
+	{
 		return $this->addWhereExpression(new CmpEq($name, $value));
 	}
 
-	public function whereIn($name, $value) {
+	public function whereIn($name, $value)
+	{
 		return $this->addWhereExpression(new CmpIn($name, $value));
 	}
 
-	public function whereOr(array $expressions) {
+	public function whereOr(array $expressions)
+	{
 		return $this->where(new LgcOr($expressions));
 	}
 
 	/**************************************************************************
 	 * Group by.
 	 */
-
-	private function addGroupByExpression(Expression $expression) {
+	private function addGroupByExpression(Expression $expression)
+	{
 		$this->groupBy[] = $expression;
 
 		return $this;
 	}
 
-	public function groupBy($expressions) {
+	public function groupBy($expressions)
+	{
 		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
 			$this->addGroupByExpression($expression);
 		}
@@ -165,14 +179,15 @@ class Select extends Expression {
 	/**************************************************************************
 	 * Having.
 	 */
-
-	private function addHavingExpression(Expression $expression) {
+	private function addHavingExpression(Expression $expression)
+	{
 		$this->having[] = $expression;
 
 		return $this;
 	}
 
-	public function having($expressions) {
+	public function having($expressions)
+	{
 		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
 			$this->addHavingExpression($expression);
 		}
@@ -183,14 +198,15 @@ class Select extends Expression {
 	/**************************************************************************
 	 * Order by.
 	 */
-
-	private function addOrderByExpression(Expression $expression) {
+	private function addOrderByExpression(Expression $expression)
+	{
 		$this->orderBy[] = $expression;
 
 		return $this;
 	}
 
-	public function orderBy($expressions) {
+	public function orderBy($expressions)
+	{
 		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
 			$this->addOrderByExpression($expression);
 		}
@@ -201,28 +217,30 @@ class Select extends Expression {
 	/**************************************************************************
 	 * Limit.
 	 */
-
-	public function setPage($page) {
+	public function setPage($page)
+	{
 		$this->_optPage = $page;
 
 		return $this;
 	}
 
-	public function setForTotal() {
+	public function setForTotal()
+	{
 		$this->setPage(new Page(1, 1));
 
 		return $this;
 	}
 
-	public function getPage() {
+	public function getPage()
+	{
 		return $this->_optPage;
 	}
 
 	/**************************************************************************
 	 * Options.
 	 */
-
-	public function addExpressions($expressions = []) {
+	public function addExpressions($expressions = [])
+	{
 		if (isset($expressions['select']) && $expressions['select']) {
 			$this->select($expressions['select']);
 		}
@@ -262,7 +280,8 @@ class Select extends Expression {
 		return $this;
 	}
 
-	public function addExpressionArrays($expressionArrays = []) {
+	public function addExpressionArrays($expressionArrays = [])
+	{
 		foreach ((array) $expressionArrays as $expressions) {
 			$this->addExpressions($expressions);
 		}
@@ -273,8 +292,8 @@ class Select extends Expression {
 	/**************************************************************************
 	 * SQL.
 	 */
-
-	public function getSql(&$context = []) {
+	public function getSql(&$context = [])
+	{
 		$sql = " SELECT ";
 
 		if ($this->_optDistinct) {
@@ -286,7 +305,7 @@ class Select extends Expression {
 		}
 
 		if ($this->select) {
-			$sql .= implode(", ", array_map(function($i) use(&$context) {
+			$sql .= implode(", ", array_map(function ($i) use (&$context) {
 				return $i->getSql($context);
 			}, $this->select));
 		} else {
@@ -294,37 +313,37 @@ class Select extends Expression {
 		}
 
 		if ($this->from) {
-			$sql .= " FROM " . implode(", ", array_map(function($i) use(&$context) {
+			$sql .= " FROM " . implode(", ", array_map(function ($i) use (&$context) {
 				return $i->getSql($context);
 			}, $this->from));
 		}
 
 		if ($this->join) {
-			$sql .= implode(" ", array_map(function($i) use(&$context) {
+			$sql .= implode(" ", array_map(function ($i) use (&$context) {
 				return $i->getSql($context);
 			}, $this->join));
 		}
 
 		if ($this->where) {
-			$sql .= " WHERE " . implode(" AND ", array_map(function($i) use(&$context) {
+			$sql .= " WHERE " . implode(" AND ", array_map(function ($i) use (&$context) {
 				return $i->getSql($context);
 			}, $this->where));
 		}
 
 		if ($this->groupBy) {
-			$sql .= " GROUP BY " . implode(", ", array_map(function($i) use(&$context) {
+			$sql .= " GROUP BY " . implode(", ", array_map(function ($i) use (&$context) {
 				return $i->getSql($context);
 			}, $this->groupBy));
 		}
 
 		if ($this->having) {
-			$sql .= " HAVING " . implode(" AND ", array_map(function($i) use(&$context) {
+			$sql .= " HAVING " . implode(" AND ", array_map(function ($i) use (&$context) {
 				return $i->getSql($context);
 			}, $this->having));
 		}
 
 		if ($this->orderBy) {
-			$sql .= " ORDER BY " . implode(", ", array_map(function($i) use(&$context) {
+			$sql .= " ORDER BY " . implode(", ", array_map(function ($i) use (&$context) {
 				return $i->getSql($context);
 			}, $this->orderBy));
 		}
@@ -336,13 +355,15 @@ class Select extends Expression {
 		return $sql;
 	}
 
-	public function getBindValues() {
+	public function getBindValues()
+	{
 		$this->getSql($context);
 
 		return isset($context['bindValues']) ? (array) $context['bindValues'] : [];
 	}
 
-	public function getAvailableTables() {
+	public function getAvailableTables()
+	{
 		$tables = [];
 
 		foreach ($this->from as $from) {
@@ -360,10 +381,10 @@ class Select extends Expression {
 		return $tables;
 	}
 
-	public function getAvailableTableNames() {
-		return array_map(function($table) {
+	public function getAvailableTableNames()
+	{
+		return array_map(function ($table) {
 			return $table->getName();
 		}, $this->getAvailableTables());
 	}
-
 }

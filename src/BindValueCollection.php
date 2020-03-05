@@ -2,15 +2,17 @@
 
 namespace Sexy;
 
-class BindValueCollection extends Expression {
-
+class BindValueCollection extends Expression
+{
 	public $values = [];
 
-	public function add($value) {
+	public function add($value)
+	{
 		$this->values[] = $value;
 	}
 
-	public function getSql(&$context = []) {
+	public function getSql(&$context = [])
+	{
 		$items = [];
 		foreach ($this->values as $value) {
 			$items[] = $value->getSql($context);
@@ -18,5 +20,4 @@ class BindValueCollection extends Expression {
 
 		return implode(", ", $items);
 	}
-
 }

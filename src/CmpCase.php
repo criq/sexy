@@ -2,19 +2,21 @@
 
 namespace Sexy;
 
-class CmpCase extends Expression {
-
+class CmpCase extends Expression
+{
 	public $column;
-	public $whens;
 	public $default;
+	public $whens;
 
-	public function __construct($column, $whens, $default = null) {
+	public function __construct($column, $whens, $default = null)
+	{
 		$this->column  = $column;
 		$this->whens   = $whens;
 		$this->default = $default instanceof Expression ? $default : new BindValue($default);
 	}
 
-	public function getSql(&$context = []) {
+	public function getSql(&$context = [])
+	{
 		$sql = " CASE " . $this->column->getSql($context);
 		foreach ($this->whens as $when) {
 			$sql .= $when->getSql($context);
@@ -26,5 +28,4 @@ class CmpCase extends Expression {
 
 		return $sql;
 	}
-
 }

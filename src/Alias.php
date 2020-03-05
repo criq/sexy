@@ -2,22 +2,24 @@
 
 namespace Sexy;
 
-class Alias extends Expression {
-
+class Alias extends Expression
+{
 	public $alias;
 
-	public function __construct($alias = null) {
+	public function __construct($alias = null)
+	{
 		$this->alias = $alias instanceof static ? $alias->getAlias() : (string)$alias;
 	}
 
-	public function getAlias() {
+	public function getAlias()
+	{
 		return $this->alias;
 	}
 
-	public function getSql(&$context = []) {
-		return implode('.', array_map(function($i) {
+	public function getSql(&$context = [])
+	{
+		return implode('.', array_map(function ($i) {
 			return "`" . $i . "`";
 		}, explode('.', trim($this->alias, "`"))));
 	}
-
 }

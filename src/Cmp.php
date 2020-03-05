@@ -2,12 +2,13 @@
 
 namespace Sexy;
 
-abstract class Cmp extends Expression {
-
+abstract class Cmp extends Expression
+{
 	public $name;
 	public $value;
 
-	public function __construct(Expression $name, $value = null) {
+	public function __construct(Expression $name, $value = null)
+	{
 		$this->name = $name;
 
 		if ($value instanceof Expression) {
@@ -21,5 +22,4 @@ abstract class Cmp extends Expression {
 			$this->value = new BindValue(null, $value);
 		}
 	}
-
 }

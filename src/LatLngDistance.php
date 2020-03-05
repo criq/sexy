@@ -2,21 +2,23 @@
 
 namespace Sexy;
 
-class LatLngDistance extends Expression {
-
+class LatLngDistance extends Expression
+{
 	public $alias;
+	public $latLng;
 	public $latRadColumn;
 	public $lngRadColumn;
-	public $latLng;
 
-	public function __construct(Alias $alias, \Katu\Pdo\Column $latRadColumn, \Katu\Pdo\Column $lngRadColumn, \Katu\Types\Geo\TLatLng $latLng) {
+	public function __construct(Alias $alias, \Katu\Pdo\Column $latRadColumn, \Katu\Pdo\Column $lngRadColumn, \Katu\Types\Geo\TLatLng $latLng)
+	{
 		$this->alias = $alias;
 		$this->latRadColumn = $latRadColumn;
 		$this->lngRadColumn = $lngRadColumn;
 		$this->latLng = $latLng;
 	}
 
-	public function getSql(&$context = []) {
+	public function getSql(&$context = [])
+	{
 		$latRad = $this->latLng->lat->getRad();
 		$lngRad = $this->latLng->lng->getRad();
 
@@ -30,5 +32,4 @@ class LatLngDistance extends Expression {
 
 		return " ((12736 * ATAN2(SQRT($temp), SQRT(1 - $temp))) * 1000) AS " . $this->alias->getSql($context);
 	}
-
 }

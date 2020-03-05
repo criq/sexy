@@ -2,35 +2,41 @@
 
 namespace Sexy;
 
-class Sexy {
-
-	static function __callStatic($name, $args) {
+class Sexy
+{
+	public static function __callStatic($name, $args)
+	{
 		$class = new \ReflectionClass("\\Sexy\\" . ucfirst($name));
 		return $class->newInstanceArgs($args);
 	}
 
-	static function a() {
-		return call_user_func_array('static::Alias', func_get_args());
+	public static function a()
+	{
+		return new Alias(...func_get_args());
 	}
 
-	static function aka() {
-		return call_user_func_array('static::AsAlias', func_get_args());
+	public static function aka()
+	{
+		return new AsAlias(...func_get_args());
 	}
 
-	static function kw() {
-		return call_user_func_array('static::Keyword', func_get_args());
+	public static function kw()
+	{
+		return new Keyword(...func_get_args());
 	}
 
-	static function val() {
-		return call_user_func_array('static::BindValue', func_get_args());
+	public static function val()
+	{
+		return new BindValue(...func_get_args());
 	}
 
-	static function placeholder() {
-		return call_user_func_array('static::BindValuePlaceholder', func_get_args());
+	public static function placeholder()
+	{
+		return new BindValuePlaceholder(...func_get_args());
 	}
 
-	static function eq() {
-		return call_user_func_array('static::CmpEq', func_get_args());
+	public static function eq()
+	{
+		return new CmpEq(...func_get_args());
 	}
-
 }
