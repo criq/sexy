@@ -11,8 +11,12 @@ abstract class Cmp extends Expression
 	{
 		$this->name = $name;
 
+		// Param.
+		if ($value instanceof Param) {
+			$this->value = $value;
+
 		// Expression.
-		if ($value instanceof Expression) {
+		} elseif ($value instanceof Expression) {
 			$this->value = $value;
 
 		// ParamCollection.
@@ -22,9 +26,9 @@ abstract class Cmp extends Expression
 				$this->value->add(new Param($v));
 			}
 
-		// Value.
+		// Anything else.
 		} else {
-			$this->value = new Param($value);
+			$this->value = new Param((string)$value);
 		}
 	}
 }

@@ -9,7 +9,7 @@ abstract class Expression
 	public function getSqlWithValues()
 	{
 		$context = [
-			'useValues' => false,
+			'useParams' => false,
 		];
 
 		return $this->getSql($context);

@@ -30,7 +30,7 @@ class Param extends Expression
 
 	public function getSql(&$context = [])
 	{
-		$useValues = (bool)!(isset($context['useValues']) && !$context['useValues']);
+		$useParams = (bool)!(isset($context['useParams']) && !$context['useParams']);
 
 		// Select.
 		if ($this->value instanceof Select) {
@@ -38,9 +38,9 @@ class Param extends Expression
 
 			return $this->value->getSql($context);
 
-		// Value.
+			// Value.
 		} else {
-			if ($useValues) {
+			if ($useParams) {
 				$context['params'][$this->name] = $this->value;
 
 				return ":" . $this->name;

@@ -40,9 +40,9 @@ class Page
 
 	public function getSql(&$context = [])
 	{
-		$useValues = (bool)!(isset($context['useValues']) && !$context['useValues']);
+		$useParams = (bool)!(isset($context['useParams']) && !$context['useParams']);
 
-		if ($useValues) {
+		if ($useParams) {
 			$context['params']['pageOffset'] = $this->getOffset();
 			$context['params']['pageLimit']  = $this->getLimit();
 
