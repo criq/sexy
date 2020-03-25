@@ -28,7 +28,7 @@ class BindValue extends Expression
 
 	public function getSql(&$context = [])
 	{
-		$useBindValues = (bool) !(isset($context['useBindValues']) && !$context['useBindValues']);
+		$useBindValues = (bool)!(isset($context['useBindValues']) && !$context['useBindValues']);
 
 		// Select.
 		if ($this->value instanceof Select) {
@@ -46,7 +46,7 @@ class BindValue extends Expression
 
 				$context['bindValues'][$this->name] = $this->value;
 
-				return ':' . $this->name;
+				return ":" . $this->name;
 			} else {
 				return "'" . $this->value . "'";
 			}
