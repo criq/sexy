@@ -9,7 +9,7 @@ class OrderBy extends Expression
 
 	public function __construct(Expression $orderBy, Keyword $direction = null)
 	{
-		$this->orderBy   = $orderBy;
+		$this->orderBy = $orderBy;
 		$this->direction = $direction;
 	}
 

@@ -14,7 +14,7 @@ class FindInSet extends Expression
 		if ($value instanceof Expression) {
 			$this->value = $value;
 		} else {
-			$this->value = new Value($value);
+			$this->value = new Param($value);
 		}
 	}
 

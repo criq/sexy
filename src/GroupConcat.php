@@ -11,10 +11,10 @@ class GroupConcat extends Expression
 
 	public function __construct(Expression $column, Expression $orderBy = null, $separator = null, $distinct = false)
 	{
-		$this->column    = $column;
-		$this->orderBy   = $orderBy;
+		$this->column = $column;
+		$this->orderBy = $orderBy;
 		$this->separator = $separator;
-		$this->distinct  = $distinct;
+		$this->distinct = $distinct;
 	}
 
 	public function getSql(&$context = [])

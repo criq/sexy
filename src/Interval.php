@@ -10,7 +10,7 @@ class Interval extends Expression
 	public function __construct(Expression $value, Keyword $unit)
 	{
 		$this->value = $value;
-		$this->unit  = $unit;
+		$this->unit = $unit;
 	}
 
 	public function getSql(&$context = [])

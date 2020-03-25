@@ -355,11 +355,11 @@ class Select extends Expression
 		return $sql;
 	}
 
-	public function getValues()
+	public function getParams()
 	{
 		$this->getSql($context);
 
-		return $context['values'] ?? [];
+		return $context['params'] ?? [];
 	}
 
 	public function getAvailableTables()

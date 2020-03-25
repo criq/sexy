@@ -10,9 +10,9 @@ class CmpCase extends Expression
 
 	public function __construct($column, $whens, $default = null)
 	{
-		$this->column  = $column;
-		$this->whens   = $whens;
-		$this->default = $default instanceof Expression ? $default : new Value($default);
+		$this->column = $column;
+		$this->default = $default instanceof Expression ? $default : new Param($default);
+		$this->whens = $whens;
 	}
 
 	public function getSql(&$context = [])

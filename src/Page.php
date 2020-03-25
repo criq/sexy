@@ -12,15 +12,15 @@ class Page
 
 	public function __construct($page = self::DEFAULT_PAGE, $perPage = self::DEFAULT_PERPAGE)
 	{
-		if (!(int) $perPage) {
+		if (!(int)$perPage) {
 			throw new \Exception("Invalid per page.");
 		}
-		if (!(int) $page) {
+		if (!(int)$page) {
 			throw new \Exception("Invalid page.");
 		}
 
-		$this->perPage = (int) $perPage;
-		$this->page    = (int) $page;
+		$this->perPage = (int)$perPage;
+		$this->page = (int)$page;
 	}
 
 	public static function createFromOffsetAndLimit($offset, $limit)
@@ -30,12 +30,12 @@ class Page
 
 	public function getOffset()
 	{
-		return (int) (($this->page * $this->perPage) - $this->perPage);
+		return (int)(($this->page * $this->perPage) - $this->perPage);
 	}
 
 	public function getLimit()
 	{
-		return (int) $this->perPage;
+		return (int)$this->perPage;
 	}
 
 	public function getSql(&$context = [])
@@ -43,8 +43,8 @@ class Page
 		$useValues = (bool)!(isset($context['useValues']) && !$context['useValues']);
 
 		if ($useValues) {
-			$context['values']['pageOffset'] = $this->getOffset();
-			$context['values']['pageLimit']  = $this->getLimit();
+			$context['params']['pageOffset'] = $this->getOffset();
+			$context['params']['pageLimit']  = $this->getLimit();
 
 			return " :pageOffset, :pageLimit ";
 		} else {

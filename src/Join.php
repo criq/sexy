@@ -11,10 +11,10 @@ class Join extends Expression
 
 	public function __construct(Expression $join, Expression $conditions = null, Keyword $direction = null, Alias $alias = null)
 	{
-		$this->direction  = $direction;
-		$this->join       = $join;
+		$this->direction = $direction;
+		$this->join = $join;
 		$this->conditions = $conditions;
-		$this->alias      = $alias;
+		$this->alias = $alias;
 
 		if ($this->join instanceof Select) {
 			$this->join->setOptGetTotalRows(false);

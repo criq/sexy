@@ -2,7 +2,7 @@
 
 namespace Sexy;
 
-class Value extends Expression
+class Param extends Expression
 {
 	public $name;
 	public $value;
@@ -22,7 +22,7 @@ class Value extends Expression
 
 		if (!$this->name) {
 			$this->name = implode('_', [
-				'anonymousValue',
+				'anonymousParam',
 				static::$anonymousId++,
 			]);
 		}
@@ -41,7 +41,7 @@ class Value extends Expression
 		// Value.
 		} else {
 			if ($useValues) {
-				$context['values'][$this->name] = $this->value;
+				$context['params'][$this->name] = $this->value;
 
 				return ":" . $this->name;
 			} else {

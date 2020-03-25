@@ -10,9 +10,9 @@ class Fnc extends Expression
 
 	public function __construct(Keyword $function, array $arguments = [], Alias $alias = null)
 	{
-		$this->function  = $function;
+		$this->function = $function;
 		$this->arguments = is_array($arguments) ? $arguments : [$arguments];
-		$this->alias     = $alias;
+		$this->alias = $alias;
 	}
 
 	public function getSql(&$context = [])

@@ -25,14 +25,9 @@ class Sexy
 		return new Keyword(...func_get_args());
 	}
 
-	public static function val()
-	{
-		return new Value(...func_get_args());
-	}
-
 	public static function placeholder()
 	{
-		return new ValuePlaceholder(...func_get_args());
+		return new ParamPlaceholder(...func_get_args());
 	}
 
 	public static function eq()
