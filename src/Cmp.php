@@ -19,7 +19,7 @@ abstract class Cmp extends Expression
 		} elseif ($value instanceof Expression) {
 			$this->value = $value;
 
-		// ParamCollection.
+		// Array.
 		} elseif (is_array($value)) {
 			$this->value = new ParamCollection;
 			foreach ($value as $v) {
