@@ -7,16 +7,16 @@ use \Katu\Pdo\Table;
 
 class Select extends Expression
 {
-	private $_optDistinct = false;
-	private $_optGetTotalRows = true;
-	private $_optPage;
-	public $from     = [];
-	public $groupBy  = [];
-	public $having   = [];
-	public $join     = [];
-	public $orderBy  = [];
-	public $select   = [];
-	public $where    = [];
+	private $optDistinct = false;
+	private $optGetTotalRows = true;
+	private $optPage;
+	public $from    = [];
+	public $groupBy = [];
+	public $having  = [];
+	public $join    = [];
+	public $orderBy = [];
+	public $select  = [];
+	public $where   = [];
 
 	public function __construct(Expression $select = null)
 	{
@@ -29,14 +29,14 @@ class Select extends Expression
 
 	public function setOptGetTotalRows($bool)
 	{
-		$this->_optGetTotalRows = (bool) $bool;
+		$this->optGetTotalRows = (bool) $bool;
 
 		return $this;
 	}
 
 	public function setDistinct($bool = true)
 	{
-		$this->_optDistinct = (bool) $bool;
+		$this->optDistinct = (bool) $bool;
 
 		return $this;
 	}
@@ -219,7 +219,7 @@ class Select extends Expression
 	 */
 	public function setPage($page)
 	{
-		$this->_optPage = $page;
+		$this->optPage = $page;
 
 		return $this;
 	}
@@ -233,7 +233,7 @@ class Select extends Expression
 
 	public function getPage()
 	{
-		return $this->_optPage;
+		return $this->optPage;
 	}
 
 	/**************************************************************************
@@ -296,11 +296,11 @@ class Select extends Expression
 	{
 		$sql = " SELECT ";
 
-		if ($this->_optDistinct) {
+		if ($this->optDistinct) {
 			$sql .= " DISTINCT ";
 		}
 
-		if ($this->_optGetTotalRows) {
+		if ($this->optGetTotalRows) {
 			$sql .= " SQL_CALC_FOUND_ROWS ";
 		}
 
@@ -348,8 +348,8 @@ class Select extends Expression
 			}, $this->orderBy));
 		}
 
-		if ($this->_optPage) {
-			$sql .= " LIMIT " . $this->_optPage->getSql($context);
+		if ($this->optPage) {
+			$sql .= " LIMIT " . $this->optPage->getSql($context);
 		}
 
 		return $sql;

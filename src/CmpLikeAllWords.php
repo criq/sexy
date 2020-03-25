@@ -4,13 +4,19 @@ namespace Sexy;
 
 class CmpLikeAllWords extends Cmp
 {
+	public $wordSqls = [];
+
+	public function __construct(Expression $name, $value = null)
+	{
+		parent::__construct($name, $value);
+
+		foreach (preg_split('/\s/', trim($this->value->value)) as $pattern) {
+			$this->wordSqls[] = new CmpLike($this->name, '%' . $pattern . '%');
+		}
+	}
+
 	public function getSql(&$context = [])
 	{
-		$wordSqls = [];
-		foreach (preg_split('/\s/', trim($this->value->value)) as $pattern) {
-			$wordSqls[] = new CmpLike($this->name, '%' . $pattern . '%');
-		}
-
-		return (new LgcAnd($wordSqls))->getSql($context);
+		return (new LgcAnd($this->wordSqls))->getSql($context);
 	}
 }

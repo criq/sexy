@@ -10,8 +10,6 @@ class Param extends Expression
 
 	public function __construct()
 	{
-		// var_dump(func_get_args());
-
 		if (count(func_get_args()) == 1) {
 			$this->name = null;
 			$this->value = func_get_arg(0);
@@ -38,7 +36,7 @@ class Param extends Expression
 
 			return $this->value->getSql($context);
 
-			// Value.
+		// Value.
 		} else {
 			if ($useParams) {
 				$context['params'][$this->name] = $this->value;
