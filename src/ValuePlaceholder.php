@@ -2,7 +2,7 @@
 
 namespace Sexy;
 
-class BindValuePlaceholder extends Expression
+class ValuePlaceholder extends Expression
 {
 	public $placeholder;
 

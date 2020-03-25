@@ -40,11 +40,11 @@ class Page
 
 	public function getSql(&$context = [])
 	{
-		$useBindValues = (bool)!(isset($context['useBindValues']) && !$context['useBindValues']);
+		$useValues = (bool)!(isset($context['useValues']) && !$context['useValues']);
 
-		if ($useBindValues) {
-			$context['bindValues']['pageOffset'] = $this->getOffset();
-			$context['bindValues']['pageLimit']  = $this->getLimit();
+		if ($useValues) {
+			$context['values']['pageOffset'] = $this->getOffset();
+			$context['values']['pageLimit']  = $this->getLimit();
 
 			return " :pageOffset, :pageLimit ";
 		} else {

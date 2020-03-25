@@ -9,8 +9,8 @@ class CmpWhen extends Expression
 
 	public function __construct($value, $result)
 	{
-		$this->value  = $value instanceof Expression ? $value : new BindValue($value);
-		$this->result = $result instanceof Expression ? $result : new BindValue($result);
+		$this->value  = $value instanceof Expression ? $value : new Value($value);
+		$this->result = $result instanceof Expression ? $result : new Value($result);
 	}
 
 	public function getSql(&$context = [])

@@ -22,8 +22,8 @@ class LatLngDistance extends Expression
 		$latRad = $this->latLng->lat->getRad();
 		$lngRad = $this->latLng->lng->getRad();
 
-		$latRadOrigin = new BindValue($latRad);
-		$lngRadOrigin = new BindValue($lngRad);
+		$latRadOrigin = new Value($latRad);
+		$lngRadOrigin = new Value($lngRad);
 
 		$latRadTarget = $this->latRadColumn;
 		$lngRadTarget = $this->lngRadColumn;

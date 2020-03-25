@@ -13,6 +13,6 @@ class JsonPath extends Expression
 
 	public function getSql(&$context = [])
 	{
-		return new BindValue("$." . $this->jsonPath);
+		return new Value("$." . $this->jsonPath);
 	}
 }

@@ -9,7 +9,7 @@ abstract class Expression
 	public function getSqlWithValues()
 	{
 		$context = [
-			'useBindValues' => false,
+			'useValues' => false,
 		];
 
 		return $this->getSql($context);

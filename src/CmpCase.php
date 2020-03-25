@@ -12,7 +12,7 @@ class CmpCase extends Expression
 	{
 		$this->column  = $column;
 		$this->whens   = $whens;
-		$this->default = $default instanceof Expression ? $default : new BindValue($default);
+		$this->default = $default instanceof Expression ? $default : new Value($default);
 	}
 
 	public function getSql(&$context = [])

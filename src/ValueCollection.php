@@ -2,7 +2,7 @@
 
 namespace Sexy;
 
-class BindValueCollection extends Expression
+class ValueCollection extends Expression
 {
 	public $values = [];
 

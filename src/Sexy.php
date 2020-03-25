@@ -27,12 +27,12 @@ class Sexy
 
 	public static function val()
 	{
-		return new BindValue(...func_get_args());
+		return new Value(...func_get_args());
 	}
 
 	public static function placeholder()
 	{
-		return new BindValuePlaceholder(...func_get_args());
+		return new ValuePlaceholder(...func_get_args());
 	}
 
 	public static function eq()

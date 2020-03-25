@@ -14,12 +14,12 @@ class CmpBetween extends Cmp
 		if ($minValue instanceof Expression) {
 			$this->minValue = $minValue;
 		} else {
-			$this->minValue = new BindValue($minValue);
+			$this->minValue = new Value($minValue);
 		}
 		if ($maxValue instanceof Expression) {
 			$this->maxValue = $maxValue;
 		} else {
-			$this->maxValue = new BindValue($maxValue);
+			$this->maxValue = new Value($maxValue);
 		}
 	}
 
