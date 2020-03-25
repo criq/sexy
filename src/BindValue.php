@@ -4,7 +4,7 @@ namespace Sexy;
 
 class BindValue extends Expression
 {
-	const ANONYMOUS_NAME_HANDLE = 'anonymousBindValue';
+	const ANONYMOUS_NAME_HANDLE = 'anonBindValue';
 
 	public $name;
 	public $value;
@@ -19,11 +19,10 @@ class BindValue extends Expression
 			$this->name = func_get_arg(0);
 			$this->value = func_get_arg(1);
 		}
-	}
 
-	public function getAnonymousId()
-	{
-		return static::$anonymousId++;
+		if (!$this->name) {
+			$this->name = static::ANONYMOUS_NAME_HANDLE . ++static::$anonymousId;
+		}
 	}
 
 	public function getSql(&$context = [])
@@ -39,11 +38,6 @@ class BindValue extends Expression
 		// Value.
 		} else {
 			if ($useBindValues) {
-				// Anonymous assignment.
-				if (!$this->name) {
-					$this->name = static::ANONYMOUS_NAME_HANDLE . $this->getAnonymousId();
-				}
-
 				$context['bindValues'][$this->name] = $this->value;
 
 				return ":" . $this->name;

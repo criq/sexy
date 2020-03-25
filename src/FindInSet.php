@@ -14,7 +14,7 @@ class FindInSet extends Expression
 		if ($value instanceof Expression) {
 			$this->value = $value;
 		} else {
-			$this->value = new BindValue(null, $value);
+			$this->value = new BindValue($value);
 		}
 	}
 

@@ -15,7 +15,7 @@ class MatchAgainst extends Expression
 		if ($against instanceof Expression) {
 			$this->against = $against;
 		} else {
-			$this->against = new BindValue(null, $against);
+			$this->against = new BindValue($against);
 		}
 	}
 

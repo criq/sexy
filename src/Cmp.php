@@ -11,15 +11,20 @@ abstract class Cmp extends Expression
 	{
 		$this->name = $name;
 
+		// Expression.
 		if ($value instanceof Expression) {
 			$this->value = $value;
+
+		// BindValueCollection.
 		} elseif (is_array($value)) {
-			$this->value = new BindValueCollection();
-			foreach ($value as $_value) {
-				$this->value->add(new BindValue(null, $_value));
+			$this->value = new BindValueCollection;
+			foreach ($value as $v) {
+				$this->value->add(new BindValue($v));
 			}
+
+		// BindValue.
 		} else {
-			$this->value = new BindValue(null, $value);
+			$this->value = new BindValue($value);
 		}
 	}
 }

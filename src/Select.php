@@ -359,7 +359,7 @@ class Select extends Expression
 	{
 		$this->getSql($context);
 
-		return isset($context['bindValues']) ? (array) $context['bindValues'] : [];
+		return $context['bindValues'] ?? [];
 	}
 
 	public function getAvailableTables()
