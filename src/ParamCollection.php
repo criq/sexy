@@ -14,7 +14,7 @@ class ParamCollection extends Expression
 	public function getSql(&$context = [])
 	{
 		$items = [];
-		foreach ($this->param as $param) {
+		foreach ($this->params as $param) {
 			$items[] = $param->getSql($context);
 		}
 
