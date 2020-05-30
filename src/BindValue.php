@@ -2,15 +2,16 @@
 
 namespace Sexy;
 
-class BindValue extends Expression {
-
+class BindValue extends Expression
+{
 	const ANONYMOUS_NAME_HANDLE = 'anonymousBindValue';
 	const ANONYMOUS_NAME_PREG   = '#^anonymousBindValue([0-9]+)$#';
 
 	public $name;
 	public $value;
 
-	public function __construct() {
+	public function __construct()
+	{
 		if (count(func_get_args()) == 1) {
 			$this->name = null;
 			$this->value = func_get_arg(0);
@@ -20,7 +21,8 @@ class BindValue extends Expression {
 		}
 	}
 
-	public function getAnonymousNames($context) {
+	public function getAnonymousNames($context)
+	{
 		if (!isset($context['bindValues'])) {
 			return [];
 		}
@@ -36,7 +38,8 @@ class BindValue extends Expression {
 		return $names;
 	}
 
-	public function getFreeAnonymousId($context) {
+	public function getFreeAnonymousId($context)
+	{
 		$ids = [];
 
 		foreach ($this->getAnonymousNames($context) as $name) {
@@ -51,21 +54,19 @@ class BindValue extends Expression {
 		return max($ids) + 1;
 	}
 
-	public function getSql(&$context = []) {
+	public function getSql(&$context = [])
+	{
 		$useBindValues = (bool) !(isset($context['useBindValues']) && !$context['useBindValues']);
 
 		// Select.
 		if ($this->value instanceof Select) {
-
 			$this->value->setOptGetTotalRows(false);
 
 			return $this->value->getSql($context);
 
 		// Value.
 		} else {
-
 			if ($useBindValues) {
-
 				// Anonymous assignment.
 				if (is_null($this->name)) {
 					$this->name = static::ANONYMOUS_NAME_HANDLE . $this->getFreeAnonymousId($context);
@@ -74,14 +75,9 @@ class BindValue extends Expression {
 				$context['bindValues'][$this->name] = $this->value;
 
 				return ':' . $this->name;
-
 			} else {
-
 				return "'" . $this->value . "'";
-
 			}
-
 		}
 	}
-
 }
