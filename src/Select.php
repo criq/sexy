@@ -9,7 +9,8 @@ class Select extends Expression
 {
 	private $optDistinct = false;
 	private $optGetTotalRows = true;
-	private $optPage;
+	private $limit;
+	private $page;
 	public $from    = [];
 	public $groupBy = [];
 	public $having  = [];
@@ -217,9 +218,16 @@ class Select extends Expression
 	/**************************************************************************
 	 * Limit.
 	 */
-	public function setPage($page)
+	public function limit(Limit $limit)
 	{
-		$this->optPage = $page;
+		$this->limit = $limit;
+
+		return $this;
+	}
+
+	public function setPage(Page $page)
+	{
+		$this->page = $page;
 
 		return $this;
 	}
@@ -233,7 +241,7 @@ class Select extends Expression
 
 	public function getPage()
 	{
-		return $this->optPage;
+		return $this->page;
 	}
 
 	/**************************************************************************
@@ -348,8 +356,10 @@ class Select extends Expression
 			}, $this->orderBy));
 		}
 
-		if ($this->optPage) {
-			$sql .= " LIMIT " . $this->optPage->getSql($context);
+		if ($this->limit) {
+			$sql .= $this->limit->getSql($context);
+		} elseif ($this->page) {
+			$sql .= " LIMIT " . $this->page->getSql($context);
 		}
 
 		return $sql;
