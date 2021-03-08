@@ -6,7 +6,7 @@ class Sexy
 {
 	public static function __callStatic($name, $args)
 	{
-		$class = new \ReflectionClass("\\Sexy\\" . ucfirst($name));
+		$class = new \ReflectionClass("Sexy\\" . ucfirst($name));
 		return $class->newInstanceArgs($args);
 	}
 
