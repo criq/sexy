@@ -28,7 +28,7 @@ class Select extends Expression
 		return $this;
 	}
 
-	public function setOptGetTotalRows($bool)
+	public function setGetFoundRows($bool)
 	{
 		$this->optGetTotalRows = (bool) $bool;
 
@@ -282,7 +282,7 @@ class Select extends Expression
 		}
 
 		if (isset($expressions['getTotalRows']) && $expressions['getTotalRows']) {
-			$this->setOptGetTotalRows(true);
+			$this->setGetFoundRows(true);
 		}
 
 		return $this;

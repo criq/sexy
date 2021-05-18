@@ -32,7 +32,7 @@ class Param extends Expression
 
 		// Select.
 		if ($this->value instanceof Select) {
-			$this->value->setOptGetTotalRows(false);
+			$this->value->setGetFoundRows(false);
 
 			return $this->value->getSql($context);
 

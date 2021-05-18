@@ -17,7 +17,7 @@ class Join extends Expression
 		$this->alias = $alias;
 
 		if ($this->join instanceof Select) {
-			$this->join->setOptGetTotalRows(false);
+			$this->join->setGetFoundRows(false);
 		}
 	}
 
