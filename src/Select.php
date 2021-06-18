@@ -190,6 +190,13 @@ class Select extends Expression {
 		return $this;
 	}
 
+	public function resetOrderBy()
+	{
+		$this->orderBy = [];
+
+		return $this;
+	}
+
 	public function orderBy($expressions) {
 		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
 			$this->addOrderByExpression($expression);
