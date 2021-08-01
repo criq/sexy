@@ -8,28 +8,22 @@ class Delete extends Command
 	{
 		$sql = " DELETE ";
 
-		if ($this->from) {
-			$sql .= " FROM " . implode(", ", array_map(function ($i) use (&$context) {
-				return $i->getSql($context);
-			}, $this->from));
+		if (count($this->getExpressions('from'))) {
+			$sql .= " FROM " . $this->getExpressions('from')->getSql(", ", $context);
 		}
 
-		if ($this->where) {
-			$sql .= " WHERE " . implode(" AND ", array_map(function ($i) use (&$context) {
-				return $i->getSql($context);
-			}, $this->where));
+		if (count($this->getExpressions('where'))) {
+			$sql .= " WHERE " . $this->getExpressions('where')->getSql(" AND ", $context);
 		}
 
-		if ($this->orderBy) {
-			$sql .= " ORDER BY " . implode(", ", array_map(function ($i) use (&$context) {
-				return $i->getSql($context);
-			}, $this->orderBy));
+		if (count($this->getExpressions('orderBy'))) {
+			$sql .= " ORDER BY " . $this->getExpressions('orderBy')->getSql(", ", $context);
 		}
 
-		if ($this->limit) {
-			$sql .= $this->limit->getSql($context);
-		} elseif ($this->page) {
-			$sql .= " LIMIT " . $this->page->getSql($context);
+		if ($this->getLimit()) {
+			$sql .= $this->getLimit()->getSql($context);
+		} elseif ($this->getPage()) {
+			$sql .= " LIMIT " . $this->getPage()->getSql($context);
 		}
 
 		return $sql;

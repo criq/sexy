@@ -7,226 +7,50 @@ use Katu\Pdo\Table;
 
 abstract class Command extends Expression
 {
-	protected $from    = [];
-	protected $groupBy = [];
-	protected $having  = [];
-	protected $join    = [];
+	protected $expressions = [];
+	protected $flags = [];
 	protected $limit;
-	protected $orderBy = [];
 	protected $page;
-	protected $select  = [];
-	protected $where   = [];
 
 	abstract public function getSql(&$context = []) : string;
 
-	/**************************************************************************
-	 * Select.
-	 */
-	private function addSelectExpression(Expression $expression)
+	public function setFlag(string $flag, bool $value) : Command
 	{
-		// Translate table to all columns.
-		if ($expression instanceof Table) {
-			$expression = new AllTableColumns($expression);
+		$this->flags[$flag] = $value;
+
+		return $this;
+	}
+
+	public function getFlag(string $flag) : bool
+	{
+		return $this->flags[$flag] ?? false;
+	}
+
+	public function addExpression(string $group, Expression $expression) : Command
+	{
+		if (!($this->expressions[$group] ?? null)) {
+			$this->expressions[$group] = new Expressions;
 		}
 
-		$this->select[] = $expression;
+		$this->expressions[$group][] = $expression;
 
 		return $this;
 	}
 
-	public function select($expressions) : Command
+	public function addExpressions(array $expressions = []) : Command
 	{
-		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
-			$this->addSelectExpression($expression);
-		}
-
-		return $this;
-	}
-
-	/**************************************************************************
-	 * From.
-	 */
-	private function addFromExpression(Expression $expression) : Command
-	{
-		$this->from[] = $expression;
-
-		return $this;
-	}
-
-	public function from($expressions) : Command
-	{
-		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
-			$this->addFromExpression($expression);
+		foreach ($expressions as $group => $groupExpressions) {
+			foreach ($groupExpressions as $expression) {
+				$this->addExpression($group, $expression);
+			}
 		}
 
 		return $this;
 	}
 
-	/**************************************************************************
-	 * Join.
-	 */
-	private function addJoinExpression(Expression $expression) : Command
+	public function getExpressions(string $group) : Expressions
 	{
-		$this->join[] = $expression;
-
-		return $this;
-	}
-
-	public function join($expressions) : Command
-	{
-		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
-			$this->addJoinExpression($expression);
-		}
-
-		return $this;
-	}
-
-	public function joinColumns(Column $ownColumn, Column $foreignColumn) : Command
-	{
-		return $this->join(new Join($foreignColumn->getTable(), new CmpEq($ownColumn, $foreignColumn)));
-	}
-
-	public function leftJoinColumns(Column $ownColumn, Column $foreignColumn) : Command
-	{
-		return $this->join(new Join($foreignColumn->getTable(), new CmpEq($ownColumn, $foreignColumn), new Keyword("left")));
-	}
-
-	/**************************************************************************
-	 * Where.
-	 */
-	private function addWhereExpression(Expression $expression) : Command
-	{
-		$this->where[] = $expression;
-
-		return $this;
-	}
-
-	public function where($expressions) : Command
-	{
-		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
-			$this->addWhereExpression($expression);
-		}
-
-		return $this;
-	}
-
-	/**************************************************************************
-	 * Group by.
-	 */
-	private function addGroupByExpression(Expression $expression) : Command
-	{
-		$this->groupBy[] = $expression;
-
-		return $this;
-	}
-
-	public function groupBy($expressions) : Command
-	{
-		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
-			$this->addGroupByExpression($expression);
-		}
-
-		return $this;
-	}
-
-	/**************************************************************************
-	 * Having.
-	 */
-	private function addHavingExpression(Expression $expression) : Command
-	{
-		$this->having[] = $expression;
-
-		return $this;
-	}
-
-	public function having($expressions) : Command
-	{
-		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
-			$this->addHavingExpression($expression);
-		}
-
-		return $this;
-	}
-
-	/**************************************************************************
-	 * Order by.
-	 */
-	private function addOrderByExpression(Expression $expression) : Command
-	{
-		$this->orderBy[] = $expression;
-
-		return $this;
-	}
-
-	public function orderBy($expressions) : Command
-	{
-		foreach (is_array($expressions) ? $expressions : [$expressions] as $expression) {
-			$this->addOrderByExpression($expression);
-		}
-
-		return $this;
-	}
-
-	/**************************************************************************
-	 * Limit.
-	 */
-	public function setLimit(Limit $limit) : Command
-	{
-		$this->limit = $limit;
-
-		return $this;
-	}
-
-	public function setPage(?Page $page) : Command
-	{
-		$this->page = $page;
-
-		return $this;
-	}
-
-	public function getPage() : ?Page
-	{
-		return $this->page;
-	}
-
-	/**************************************************************************
-	 * Options.
-	 */
-	public function addExpressions($expressions = []) : Command
-	{
-		if (isset($expressions['select']) && $expressions['select']) {
-			$this->select($expressions['select']);
-		}
-
-		if (isset($expressions['from']) && $expressions['from']) {
-			$this->from($expressions['from']);
-		}
-
-		if (isset($expressions['join']) && $expressions['join']) {
-			$this->join($expressions['join']);
-		}
-
-		if (isset($expressions['where']) && $expressions['where']) {
-			$this->where($expressions['where']);
-		}
-
-		if (isset($expressions['groupBy']) && $expressions['groupBy']) {
-			$this->groupBy($expressions['groupBy']);
-		}
-
-		if (isset($expressions['having']) && $expressions['having']) {
-			$this->having($expressions['having']);
-		}
-
-		if (isset($expressions['orderBy']) && $expressions['orderBy']) {
-			$this->orderBy($expressions['orderBy']);
-		}
-
-		if (isset($expressions['page']) && $expressions['page']) {
-			$this->setPage($expressions['page']);
-		}
-
-		return $this;
+		return $this->expressions[$group] ?? new Expressions;
 	}
 
 	public function getParams() : array
@@ -260,5 +84,116 @@ abstract class Command extends Expression
 		return array_map(function ($table) {
 			return $table->getName();
 		}, $this->getAvailableTables());
+	}
+
+	/**************************************************************************
+	 * Select.
+	 */
+	public function select(Expression $expression) : Command
+	{
+		if ($expression instanceof Table) {
+			$expression = new AllTableColumns($expression);
+		}
+
+		$this->addExpression('select', $expression);
+
+		return $this;
+	}
+
+	/**************************************************************************
+	 * From.
+	 */
+	public function from(Expression $expression) : Command
+	{
+		$this->addExpression('from', $expression);
+
+		return $this;
+	}
+
+	/**************************************************************************
+	 * Join.
+	 */
+	public function join(Expression $expression) : Command
+	{
+		$this->addExpression('join', $expression);
+
+		return $this;
+	}
+
+	public function joinColumns(Column $ownColumn, Column $foreignColumn) : Command
+	{
+		return $this->join(new Join($foreignColumn->getTable(), new CmpEq($ownColumn, $foreignColumn)));
+	}
+
+	public function leftJoinColumns(Column $ownColumn, Column $foreignColumn) : Command
+	{
+		return $this->join(new Join($foreignColumn->getTable(), new CmpEq($ownColumn, $foreignColumn), new Keyword("left")));
+	}
+
+	/**************************************************************************
+	 * Where.
+	 */
+	public function where(Expression $expression) : Command
+	{
+		$this->addExpression('where', $expression);
+
+		return $this;
+	}
+
+	/**************************************************************************
+	 * Group by.
+	 */
+	public function groupBy(Expression $expression) : Command
+	{
+		$this->addExpression('groupBy', $expression);
+
+		return $this;
+	}
+
+	/**************************************************************************
+	 * Having.
+	 */
+	public function having(Expression $expression) : Command
+	{
+		$this->addExpression('having', $expression);
+
+		return $this;
+	}
+
+	/**************************************************************************
+	 * Order by.
+	 */
+	public function orderBy(Expression $expression) : Command
+	{
+		$this->addExpression('orderBy', $expression);
+
+		return $this;
+	}
+
+	/**************************************************************************
+	 * Limit.
+	 */
+	public function setLimit(?Limit $limit) : Command
+	{
+		$this->limit = $limit;
+
+		return $this;
+	}
+
+	public function getLimit() : ?Limit
+	{
+		return $this->limit;
+	}
+
+	public function setPage(?Page $page) : Command
+	{
+		$this->page = $page;
+
+		return $this;
+	}
+
+	public function getPage() : ?Page
+	{
+		return $this->page;
 	}
 }

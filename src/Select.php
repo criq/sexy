@@ -4,28 +4,27 @@ namespace Sexy;
 
 class Select extends Command
 {
-	protected $getDistinctRows = false;
-	protected $getTotalRows = true;
-
 	public function __construct(Expression $select = null)
 	{
 		if ($select) {
 			$this->select(...func_get_args());
 		}
 
+		$this->setGetFoundRows(true);
+
 		return $this;
 	}
 
 	public function setGetFoundRows(bool $value = true) : Select
 	{
-		$this->getTotalRows = $value;
+		$this->setFlag('getTotalRows', $value);
 
 		return $this;
 	}
 
 	public function setGetDistinctRows(bool $value = true) : Select
 	{
-		$this->getDistinctRows = $value;
+		$this->setFlag('getDistinctRows', $value);
 
 		return $this;
 	}
@@ -41,62 +40,48 @@ class Select extends Command
 	{
 		$sql = " SELECT ";
 
-		if ($this->getDistinctRows) {
+		if ($this->getFlag('getDistinctRows')) {
 			$sql .= " DISTINCT ";
 		}
 
-		if ($this->getTotalRows) {
+		if ($this->getFlag('getTotalRows')) {
 			$sql .= " SQL_CALC_FOUND_ROWS ";
 		}
 
-		if ($this->select) {
-			$sql .= implode(", ", array_map(function ($i) use (&$context) {
-				return $i->getSql($context);
-			}, $this->select));
+		if (count($this->getExpressions('select'))) {
+			$sql .= $this->getExpressions('select')->getSql(", ", $context);
 		} else {
 			$sql .= " * ";
 		}
 
-		if ($this->from) {
-			$sql .= " FROM " . implode(", ", array_map(function ($i) use (&$context) {
-				return $i->getSql($context);
-			}, $this->from));
+		if (count($this->getExpressions('from'))) {
+			$sql .= " FROM " . $this->getExpressions('from')->getSql(", ", $context);
 		}
 
-		if ($this->join) {
-			$sql .= implode(" ", array_map(function ($i) use (&$context) {
-				return $i->getSql($context);
-			}, $this->join));
+		if (count($this->getExpressions('join'))) {
+			$sql .= $this->getExpressions('join')->getSql(" ", $context);
 		}
 
-		if ($this->where) {
-			$sql .= " WHERE " . implode(" AND ", array_map(function ($i) use (&$context) {
-				return $i->getSql($context);
-			}, $this->where));
+		if (count($this->getExpressions('where'))) {
+			$sql .= " WHERE " . $this->getExpressions('where')->getSql(" AND ", $context);
 		}
 
-		if ($this->groupBy) {
-			$sql .= " GROUP BY " . implode(", ", array_map(function ($i) use (&$context) {
-				return $i->getSql($context);
-			}, $this->groupBy));
+		if (count($this->getExpressions('groupBy'))) {
+			$sql .= " GROUP BY " . $this->getExpressions('groupBy')->getSql(", ", $context);
 		}
 
-		if ($this->having) {
-			$sql .= " HAVING " . implode(" AND ", array_map(function ($i) use (&$context) {
-				return $i->getSql($context);
-			}, $this->having));
+		if (count($this->getExpressions('having'))) {
+			$sql .= " HAVING " . $this->getExpressions('having')->getSql(" AND ", $context);
 		}
 
-		if ($this->orderBy) {
-			$sql .= " ORDER BY " . implode(", ", array_map(function ($i) use (&$context) {
-				return $i->getSql($context);
-			}, $this->orderBy));
+		if (count($this->getExpressions('orderBy'))) {
+			$sql .= " ORDER BY " . $this->getExpressions('orderBy')->getSql(", ", $context);
 		}
 
-		if ($this->limit) {
-			$sql .= $this->limit->getSql($context);
-		} elseif ($this->page) {
-			$sql .= " LIMIT " . $this->page->getSql($context);
+		if ($this->getLimit()) {
+			$sql .= $this->getLimit()->getSql($context);
+		} elseif ($this->getPage()) {
+			$sql .= " LIMIT " . $this->getPage()->getSql($context);
 		}
 
 		return $sql;
