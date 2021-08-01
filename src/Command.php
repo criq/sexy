@@ -64,13 +64,13 @@ abstract class Command extends Expression
 	{
 		$tables = [];
 
-		foreach ($this->from as $from) {
+		foreach ($this->getExpressions('from') as $from) {
 			if ($from instanceof \Katu\PDO\TableBase) {
 				$tables[] = $from;
 			}
 		}
 
-		foreach ($this->join as $join) {
+		foreach ($this->getExpressions('join') as $join) {
 			if ($join->join instanceof \Katu\PDO\TableBase) {
 				$tables[] = $join->join;
 			}
