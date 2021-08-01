@@ -2,12 +2,16 @@
 
 namespace Sexy;
 
+use Katu\Types\TClass;
+
 class Sexy
 {
 	public static function __callStatic($name, $args)
 	{
-		$class = new \ReflectionClass("Sexy\\" . ucfirst($name));
-		return $class->newInstanceArgs($args);
+		$class = new TClass("Sexy\\" . ucfirst($name));
+		$className = $class->getName();
+
+		return new $className(...$args);
 	}
 
 	public static function a()
