@@ -1,5 +1,5 @@
 {
-	"name": "jabli/sexy",
+	"name": "criq/sexy",
 	"description": "sexy sql expressions",
 	"type": "library",
 	"require" : {
