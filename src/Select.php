@@ -49,33 +49,33 @@ class Select extends Command
 		}
 
 		if (count($this->getExpressions('select'))) {
-			$sql .= $this->getExpressions('select')->getSql(", ", $context);
+			$sql .= $this->getExpressions('select')->setDelimiter(", ")->getSql($context);
 		} else {
 			$sql .= " * ";
 		}
 
 		if (count($this->getExpressions('from'))) {
-			$sql .= " FROM " . $this->getExpressions('from')->getSql(", ", $context);
+			$sql .= " FROM " . $this->getExpressions('from')->setDelimiter(", ")->getSql($context);
 		}
 
 		if (count($this->getExpressions('join'))) {
-			$sql .= $this->getExpressions('join')->getSql(" ", $context);
+			$sql .= $this->getExpressions('join')->setDelimiter(" ")->getSql($context);
 		}
 
 		if (count($this->getExpressions('where'))) {
-			$sql .= " WHERE " . $this->getExpressions('where')->getSql(" AND ", $context);
+			$sql .= " WHERE " . $this->getExpressions('where')->setDelimiter(" AND ")->getSql($context);
 		}
 
 		if (count($this->getExpressions('groupBy'))) {
-			$sql .= " GROUP BY " . $this->getExpressions('groupBy')->getSql(", ", $context);
+			$sql .= " GROUP BY " . $this->getExpressions('groupBy')->setDelimiter(", ")->getSql($context);
 		}
 
 		if (count($this->getExpressions('having'))) {
-			$sql .= " HAVING " . $this->getExpressions('having')->getSql(" AND ", $context);
+			$sql .= " HAVING " . $this->getExpressions('having')->setDelimiter(" AND ")->getSql($context);
 		}
 
 		if (count($this->getExpressions('orderBy'))) {
-			$sql .= " ORDER BY " . $this->getExpressions('orderBy')->getSql(", ", $context);
+			$sql .= " ORDER BY " . $this->getExpressions('orderBy')->setDelimiter(", ")->getSql($context);
 		}
 
 		if ($this->getLimit()) {

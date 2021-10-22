@@ -22,6 +22,13 @@ class ExpressionCollection extends Expression implements \Countable
 		return $this->expressions;
 	}
 
+	public function setDelimiter(string $value): ExpressionCollection
+	{
+		$this->delimiter = $value;
+
+		return $this;
+	}
+
 	public function getDelimiter(): string
 	{
 		return $this->delimiter;
