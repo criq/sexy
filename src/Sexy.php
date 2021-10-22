@@ -14,6 +14,11 @@ class Sexy
 		return new $className(...$args);
 	}
 
+	public static function coll()
+	{
+		return new ExpressionCollection(...func_get_args());
+	}
+
 	public static function a()
 	{
 		return new Alias(...func_get_args());
