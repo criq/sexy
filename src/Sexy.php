@@ -38,4 +38,9 @@ class Sexy
 	{
 		return new CmpEq(...func_get_args());
 	}
+
+	public static function select()
+	{
+		return new Select(...func_get_args());
+	}
 }

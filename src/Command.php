@@ -12,32 +12,32 @@ abstract class Command extends Expression
 	protected $limit;
 	protected $page;
 
-	abstract public function getSql(&$context = []) : string;
+	abstract public function getSql(&$context = []): string;
 
-	public function setFlag(string $flag, bool $value) : Command
+	public function setFlag(string $flag, bool $value): Command
 	{
 		$this->flags[$flag] = $value;
 
 		return $this;
 	}
 
-	public function getFlag(string $flag) : bool
+	public function getFlag(string $flag): bool
 	{
 		return $this->flags[$flag] ?? false;
 	}
 
-	public function addExpression(string $group, Expression $expression) : Command
+	public function addExpression(string $group, Expression $expression): Command
 	{
 		if (!($this->expressions[$group] ?? null)) {
-			$this->expressions[$group] = new Expressions;
+			$this->expressions[$group] = new ExpressionCollection;
 		}
 
-		$this->expressions[$group][] = $expression;
+		$this->expressions[$group]->addExpression($expression);
 
 		return $this;
 	}
 
-	public function addExpressions(array $expressions = []) : Command
+	public function addExpressions(array $expressions = []): Command
 	{
 		foreach ($expressions as $group => $groupExpressions) {
 			foreach ($groupExpressions as $expression) {
@@ -48,19 +48,19 @@ abstract class Command extends Expression
 		return $this;
 	}
 
-	public function getExpressions(string $group) : Expressions
+	public function getExpressions(string $group): ExpressionCollection
 	{
-		return $this->expressions[$group] ?? new Expressions;
+		return $this->expressions[$group] ?? new ExpressionCollection;
 	}
 
-	public function getParams() : array
+	public function getParams(): array
 	{
 		$this->getSql($context);
 
 		return $context['params'] ?? [];
 	}
 
-	public function getAvailableTables() : array
+	public function getAvailableTables(): array
 	{
 		$tables = [];
 
@@ -79,7 +79,7 @@ abstract class Command extends Expression
 		return $tables;
 	}
 
-	public function getAvailableTableNames() : array
+	public function getAvailableTableNames(): array
 	{
 		return array_map(function ($table) {
 			return $table->getName();
@@ -89,7 +89,7 @@ abstract class Command extends Expression
 	/**************************************************************************
 	 * Select.
 	 */
-	public function select(Expression $expression) : Command
+	public function select(Expression $expression): Command
 	{
 		if ($expression instanceof Table) {
 			$expression = new AllTableColumns($expression);
@@ -103,7 +103,7 @@ abstract class Command extends Expression
 	/**************************************************************************
 	 * From.
 	 */
-	public function from(Expression $expression) : Command
+	public function from(Expression $expression): Command
 	{
 		$this->addExpression('from', $expression);
 
@@ -113,19 +113,19 @@ abstract class Command extends Expression
 	/**************************************************************************
 	 * Join.
 	 */
-	public function join(Expression $expression) : Command
+	public function join(Expression $expression): Command
 	{
 		$this->addExpression('join', $expression);
 
 		return $this;
 	}
 
-	public function joinColumns(Column $ownColumn, Column $foreignColumn) : Command
+	public function joinColumns(Column $ownColumn, Column $foreignColumn): Command
 	{
 		return $this->join(new Join($foreignColumn->getTable(), new CmpEq($ownColumn, $foreignColumn)));
 	}
 
-	public function leftJoinColumns(Column $ownColumn, Column $foreignColumn) : Command
+	public function leftJoinColumns(Column $ownColumn, Column $foreignColumn): Command
 	{
 		return $this->join(new Join($foreignColumn->getTable(), new CmpEq($ownColumn, $foreignColumn), new Keyword("left")));
 	}
@@ -133,7 +133,7 @@ abstract class Command extends Expression
 	/**************************************************************************
 	 * Where.
 	 */
-	public function where(Expression $expression) : Command
+	public function where(Expression $expression): Command
 	{
 		$this->addExpression('where', $expression);
 
@@ -143,7 +143,7 @@ abstract class Command extends Expression
 	/**************************************************************************
 	 * Group by.
 	 */
-	public function groupBy(Expression $expression) : Command
+	public function groupBy(Expression $expression): Command
 	{
 		$this->addExpression('groupBy', $expression);
 
@@ -153,7 +153,7 @@ abstract class Command extends Expression
 	/**************************************************************************
 	 * Having.
 	 */
-	public function having(Expression $expression) : Command
+	public function having(Expression $expression): Command
 	{
 		$this->addExpression('having', $expression);
 
@@ -163,7 +163,7 @@ abstract class Command extends Expression
 	/**************************************************************************
 	 * Order by.
 	 */
-	public function orderBy(Expression $expression) : Command
+	public function orderBy(Expression $expression): Command
 	{
 		$this->addExpression('orderBy', $expression);
 
@@ -173,26 +173,26 @@ abstract class Command extends Expression
 	/**************************************************************************
 	 * Limit.
 	 */
-	public function setLimit(?Limit $limit) : Command
+	public function setLimit(?Limit $limit): Command
 	{
 		$this->limit = $limit;
 
 		return $this;
 	}
 
-	public function getLimit() : ?Limit
+	public function getLimit(): ?Limit
 	{
 		return $this->limit;
 	}
 
-	public function setPage(?Page $page) : Command
+	public function setPage(?Page $page): Command
 	{
 		$this->page = $page;
 
 		return $this;
 	}
 
-	public function getPage() : ?Page
+	public function getPage(): ?Page
 	{
 		return $this->page;
 	}
