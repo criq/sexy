@@ -71,7 +71,7 @@ abstract class Command extends Expression
 		}
 
 		foreach ($this->getExpressions('join') as $join) {
-			if ($join->join instanceof \Katu\PDO\TableBase) {
+			if (($join->join ?? null) instanceof \Katu\PDO\TableBase) {
 				$tables[] = $join->join;
 			}
 		}
