@@ -2,8 +2,10 @@
 
 namespace Sexy;
 
-class ExpressionCollection extends Expression implements \Countable
+class ExpressionCollection extends Expression implements \Countable, \Iterator
 {
+	protected $iteratorPosition = 0;
+
 	public function __construct(array $expressions = [], string $delimiter = ", ")
 	{
 		$this->expressions = $expressions;
@@ -44,5 +46,30 @@ class ExpressionCollection extends Expression implements \Countable
 	public function count(): int
 	{
 		return count($this->getExpressions());
+	}
+
+	public function rewind()
+	{
+		$this->iteratorPosition = 0;
+	}
+
+	public function current()
+	{
+		return $this->expressions[$this->iteratorPosition];
+	}
+
+	public function key()
+	{
+		return $this->iteratorPosition;
+	}
+
+	public function next()
+	{
+		++$this->iteratorPosition;
+	}
+
+	public function valid()
+	{
+		return isset($this->expressions[$this->iteratorPosition]);
 	}
 }
