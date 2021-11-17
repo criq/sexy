@@ -96,19 +96,19 @@ class Select extends Command
 		}
 
 		if ($this->getFlag('intoOutfile')) {
-			$sql .= " INTO OUTFILE `" . $this->getFlag('intoOutfile') . "` ";
+			$sql .= " INTO OUTFILE '" . $this->getFlag('intoOutfile') . "' ";
 
 			if ($this->getFlag('fieldsTerminatedBy')) {
-				$sql .= " FIELDS TERMINATED BY `" . $this->getFlag('fieldsTerminatedBy') . "` ";
+				$sql .= " FIELDS TERMINATED BY '" . $this->getFlag('fieldsTerminatedBy') . "' ";
 			}
 			if ($this->getFlag('optionallyEnclosedBy')) {
-				$sql .= " OPTIONALLY ENCLOSED BY `" . $this->getFlag('optionallyEnclosedBy') . "` ";
+				$sql .= " OPTIONALLY ENCLOSED BY '" . $this->getFlag('optionallyEnclosedBy') . "' ";
 			}
 			if ($this->getFlag('escapedBy')) {
-				$sql .= " ESCAPED BY `" . $this->getFlag('escapedBy') . "` ";
+				$sql .= " ESCAPED BY '" . $this->getFlag('escapedBy') . "' ";
 			}
 			if ($this->getFlag('linesTerminatedBy')) {
-				$sql .= " LINES TERMINATED BY `" . $this->getFlag('linesTerminatedBy') . "` ";
+				$sql .= " LINES TERMINATED BY '" . $this->getFlag('linesTerminatedBy') . "' ";
 			}
 		}
 
