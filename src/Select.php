@@ -96,7 +96,7 @@ class Select extends Command
 		}
 
 		if ($this->getFlag('intoOutfile')) {
-			$sql .= " INTO OUTFILE " . $this->getFlag('intoOutfile');
+			$sql .= " INTO OUTFILE `" . $this->getFlag('intoOutfile') . "` ";
 
 			if ($this->getFlag('fieldsTerminatedBy')) {
 				$sql .= " FIELDS TERMINATED BY `" . $this->getFlag('fieldsTerminatedBy') . "` ";
