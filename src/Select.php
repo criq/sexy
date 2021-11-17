@@ -36,6 +36,15 @@ class Select extends Command
 		return $this;
 	}
 
+	public function setIntoOutfile(\Katu\Files\File $file, $fieldsTerminatedBy = ",", $optionallyEnclosedBy = '"', $escapedBy = '', $linesTerminatedBy = '\n')
+	{
+		$this->setFlag('intoOutfile', (string)$file);
+		$this->setFlag('fieldsTerminatedBy', (string)$fieldsTerminatedBy);
+		$this->setFlag('optionallyEnclosedBy', (string)$optionallyEnclosedBy);
+		$this->setFlag('escapedBy', (string)$escapedBy);
+		$this->setFlag('linesTerminatedBy', (string)$linesTerminatedBy);
+	}
+
 	public function getSql(&$context = []) : string
 	{
 		$sql = " SELECT ";
@@ -82,6 +91,23 @@ class Select extends Command
 			$sql .= $this->getLimit()->getSql($context);
 		} elseif ($this->getPage()) {
 			$sql .= " LIMIT " . $this->getPage()->getSql($context);
+		}
+
+		if ($this->getFlag('intoOutfile')) {
+			$sql .= " INTO OUTFILE " . $this->getFlag('intoOutfile');
+
+			if ($this->getFlag('fieldsTerminatedBy')) {
+				$sql .= " FIELDS TERMINATED BY `" . $this->getFlag('fieldsTerminatedBy') . "` ";
+			}
+			if ($this->getFlag('optionallyEnclosedBy')) {
+				$sql .= " OPTIONALLY ENCLOSED BY `" . $this->getFlag('optionallyEnclosedBy') . "` ";
+			}
+			if ($this->getFlag('escapedBy')) {
+				$sql .= " ESCAPED BY `" . $this->getFlag('escapedBy') . "` ";
+			}
+			if ($this->getFlag('linesTerminatedBy')) {
+				$sql .= " LINES TERMINATED BY `" . $this->getFlag('linesTerminatedBy') . "` ";
+			}
 		}
 
 		return $sql;
