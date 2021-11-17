@@ -14,16 +14,16 @@ abstract class Command extends Expression
 
 	abstract public function getSql(&$context = []): string;
 
-	public function setFlag(string $flag, bool $value): Command
+	public function setFlag(string $flag, $value): Command
 	{
 		$this->flags[$flag] = $value;
 
 		return $this;
 	}
 
-	public function getFlag(string $flag): bool
+	public function getFlag(string $flag)
 	{
-		return $this->flags[$flag] ?? false;
+		return $this->flags[$flag] ?? null;
 	}
 
 	public function addExpression(string $group, Expression $expression): Command
