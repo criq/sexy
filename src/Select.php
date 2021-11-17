@@ -15,37 +15,39 @@ class Select extends Command
 		return $this;
 	}
 
-	public function setGetFoundRows(bool $value = true) : Select
+	public function setGetFoundRows(bool $value = true): Select
 	{
 		$this->setFlag('getTotalRows', $value);
 
 		return $this;
 	}
 
-	public function setGetDistinctRows(bool $value = true) : Select
+	public function setGetDistinctRows(bool $value = true): Select
 	{
 		$this->setFlag('getDistinctRows', $value);
 
 		return $this;
 	}
 
-	public function setGetTotalOnly(bool $value = true) : Select
+	public function setGetTotalOnly(bool $value = true): Select
 	{
-		$this->setPage($value ? new Page(1, 1) : null);
+		$this->setPage($value ? new Page(1, 1): null);
 
 		return $this;
 	}
 
-	public function setIntoOutfile(\Katu\Files\File $file, $fieldsTerminatedBy = ",", $optionallyEnclosedBy = '"', $escapedBy = '', $linesTerminatedBy = '\n')
+	public function setIntoOutfile(\Katu\Files\File $file, $fieldsTerminatedBy = ",", $optionallyEnclosedBy = '"', $escapedBy = '', $linesTerminatedBy = '\n'): Select
 	{
 		$this->setFlag('intoOutfile', (string)$file);
 		$this->setFlag('fieldsTerminatedBy', (string)$fieldsTerminatedBy);
 		$this->setFlag('optionallyEnclosedBy', (string)$optionallyEnclosedBy);
 		$this->setFlag('escapedBy', (string)$escapedBy);
 		$this->setFlag('linesTerminatedBy', (string)$linesTerminatedBy);
+
+		return $this;
 	}
 
-	public function getSql(&$context = []) : string
+	public function getSql(&$context = []): string
 	{
 		$sql = " SELECT ";
 
