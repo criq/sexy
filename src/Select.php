@@ -105,7 +105,7 @@ class Select extends Command
 				$sql .= " OPTIONALLY ENCLOSED BY '" . $this->getFlag('optionallyEnclosedBy') . "' ";
 			}
 			if ($this->getFlag('escapedBy')) {
-				$sql .= " ESCAPED BY '" . $this->getFlag('escapedBy') . "' ";
+				$sql .= " ESCAPED BY " . (new Param($this->getFlag('escapedBy'))) . " ";
 			}
 			if ($this->getFlag('linesTerminatedBy')) {
 				$sql .= " LINES TERMINATED BY '" . $this->getFlag('linesTerminatedBy') . "' ";
