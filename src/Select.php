@@ -36,7 +36,7 @@ class Select extends Command
 		return $this;
 	}
 
-	public function setIntoOutfile(\Katu\Files\File $file, $fieldsTerminatedBy = ",", $optionallyEnclosedBy = '"', $escapedBy = "\\", $linesTerminatedBy = '\n'): Select
+	public function setIntoOutfile(\Katu\Files\File $file, $fieldsTerminatedBy = ",", $optionallyEnclosedBy = '"', $escapedBy = '\\', $linesTerminatedBy = '\n'): Select
 	{
 		$this->setFlag('intoOutfile', (string)$file);
 		$this->setFlag('fieldsTerminatedBy', (string)$fieldsTerminatedBy);
