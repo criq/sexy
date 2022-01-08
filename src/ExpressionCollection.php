@@ -2,9 +2,11 @@
 
 namespace Sexy;
 
-class ExpressionCollection extends Expression implements \Countable, \Iterator
+class ExpressionCollection extends Expression implements \ArrayAccess, \Countable, \Iterator
 {
 	protected $iteratorPosition = 0;
+	protected $expressions;
+	protected $delimiter;
 
 	public function __construct(array $expressions = [], string $delimiter = ", ")
 	{
@@ -41,6 +43,26 @@ class ExpressionCollection extends Expression implements \Countable, \Iterator
 		return implode($this->getDelimiter(), array_map(function ($i) use (&$context) {
 			return $i->getSql($context);
 		}, $this->getExpressions()));
+	}
+
+	public function offsetExists($offset)
+	{
+		return isset($this->expressions[$offset]);
+	}
+
+	public function offsetGet($offset)
+	{
+		return $this->expressions[$offset];
+	}
+
+	public function offsetSet($offset, $value)
+	{
+		$this->expressions[$offset] = $value;
+	}
+
+	public function offsetUnset($offset)
+	{
+		unset($this->expressions[$offset]);
 	}
 
 	public function count(): int
