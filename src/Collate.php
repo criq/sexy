@@ -10,7 +10,7 @@ class Collate extends Expression
 	public function __construct(Expression $expression, $collation)
 	{
 		$this->expression = $expression;
-		$this->collation  = $collation;
+		$this->collation = $collation;
 	}
 
 	public function getSql(&$context = [])
