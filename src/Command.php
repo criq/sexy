@@ -57,21 +57,21 @@ abstract class Command extends Expression
 	{
 		$this->getSql($context);
 
-		return $context['params'] ?? [];
+		return $context["params"] ?? [];
 	}
 
 	public function getAvailableTables(): array
 	{
 		$tables = [];
 
-		foreach ($this->getExpressions('from') as $from) {
-			if ($from instanceof \Katu\PDO\TableBase) {
+		foreach ($this->getExpressions("from") as $from) {
+			if ($from instanceof \Katu\PDO\Table) {
 				$tables[] = $from;
 			}
 		}
 
-		foreach ($this->getExpressions('join') as $join) {
-			if (($join->join ?? null) instanceof \Katu\PDO\TableBase) {
+		foreach ($this->getExpressions("join") as $join) {
+			if (($join->join ?? null) instanceof \Katu\PDO\Table) {
 				$tables[] = $join->join;
 			}
 		}
@@ -95,7 +95,7 @@ abstract class Command extends Expression
 			$expression = new AllTableColumns($expression);
 		}
 
-		$this->addExpression('select', $expression);
+		$this->addExpression("select", $expression);
 
 		return $this;
 	}
@@ -105,7 +105,7 @@ abstract class Command extends Expression
 	 */
 	public function from(Expression $expression): Command
 	{
-		$this->addExpression('from', $expression);
+		$this->addExpression("from", $expression);
 
 		return $this;
 	}
@@ -115,7 +115,7 @@ abstract class Command extends Expression
 	 */
 	public function join(Expression $expression): Command
 	{
-		$this->addExpression('join', $expression);
+		$this->addExpression("join", $expression);
 
 		return $this;
 	}
@@ -135,7 +135,7 @@ abstract class Command extends Expression
 	 */
 	public function where(Expression $expression): Command
 	{
-		$this->addExpression('where', $expression);
+		$this->addExpression("where", $expression);
 
 		return $this;
 	}
@@ -145,7 +145,7 @@ abstract class Command extends Expression
 	 */
 	public function groupBy(Expression $expression): Command
 	{
-		$this->addExpression('groupBy', $expression);
+		$this->addExpression("groupBy", $expression);
 
 		return $this;
 	}
@@ -155,7 +155,7 @@ abstract class Command extends Expression
 	 */
 	public function having(Expression $expression): Command
 	{
-		$this->addExpression('having', $expression);
+		$this->addExpression("having", $expression);
 
 		return $this;
 	}
@@ -165,7 +165,7 @@ abstract class Command extends Expression
 	 */
 	public function orderBy(Expression $expression): Command
 	{
-		$this->addExpression('orderBy', $expression);
+		$this->addExpression("orderBy", $expression);
 
 		return $this;
 	}
