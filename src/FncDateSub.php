@@ -2,10 +2,10 @@
 
 namespace Sexy;
 
-class FncMax extends Fnc
+class FncDateSub extends Fnc
 {
 	public function __construct(array $arguments = [], Alias $alias = null)
 	{
-		return parent::__construct(new Keyword("max"), $arguments, $alias);
+		return parent::__construct(new Keyword("date_sub"), $arguments, $alias);
 	}
 }
