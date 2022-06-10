@@ -15,6 +15,6 @@ class Collate extends Expression
 
 	public function getSql(&$context = [])
 	{
-		return " ( ( " . $this->expression->getSql($context) . " ) COLLATE " . $this->collation . " ) ";
+		return " ( ( {$this->expression->getSql($context)} ) COLLATE {$this->collation} ) ";
 	}
 }
