@@ -26,6 +26,11 @@ abstract class Command extends Expression
 		return $this->flags[$flag] ?? null;
 	}
 
+	public function setGetFoundRows(): Command
+	{
+		return $this;
+	}
+
 	public function addExpression(string $group, Expression $expression): Command
 	{
 		if (!($this->expressions[$group] ?? null)) {
