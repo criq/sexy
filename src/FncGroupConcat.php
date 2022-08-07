@@ -29,7 +29,7 @@ class FncGroupConcat extends Fnc
 		if ($this->orderBy) {
 			$sql .= " ORDER BY " . $this->orderBy->getSql($context);
 		}
-		if ($this->separator) {
+		if (strlen($this->separator)) {
 			$sql .= " SEPARATOR " . $this->separator->getSql($context);
 		}
 		$sql .= " ) ";
