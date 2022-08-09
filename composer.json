@@ -4,7 +4,7 @@
 	"type": "library",
 	"require" : {
 		"php": ">=7",
-		"criq/katu": "v2.x-dev"
+		"criq/katu": "^3"
 	},
 	"minimum-stability": "dev",
 	"autoload": {
