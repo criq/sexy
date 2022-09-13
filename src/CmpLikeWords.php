@@ -10,8 +10,8 @@ abstract class CmpLikeWords extends Cmp
 	{
 		parent::__construct($name, $value);
 
-		foreach (preg_split('/\s/', trim($this->value->value)) as $pattern) {
-			$this->wordSqls[] = new CmpLike($this->name, '%' . $pattern . '%');
+		foreach (preg_split("/\s/", trim($this->value->value)) as $pattern) {
+			$this->wordSqls[] = new CmpLike($this->name, "%{$pattern}%");
 		}
 	}
 }
