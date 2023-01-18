@@ -105,6 +105,13 @@ abstract class Command extends Expression
 		return $this;
 	}
 
+	public function removeSelectExpressions(): Command
+	{
+		$this->expressions["select"] = null;
+
+		return $this;
+	}
+
 	/**************************************************************************
 	 * From.
 	 */
