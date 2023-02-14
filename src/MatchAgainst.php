@@ -25,7 +25,7 @@ class MatchAgainst extends Expression
 		$sql .= implode(", ", array_map(function ($i) use (&$context) {
 			return $i->getSql($context);
 		}, $this->match));
-		$sql .= " AGAINST ( " . $this->against->getSql($context) . " " . $this->modifier . " ) ";
+		$sql .= " AGAINST ( {$this->against->getSql($context)} {$this->modifier} ) ";
 
 		return $sql;
 	}
