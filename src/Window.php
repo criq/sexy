@@ -22,7 +22,7 @@ class Window extends Expression
 				return $e->getSql($context);
 			}, $this->partition)));
 			if ($partitionBySql) {
-				$sql .= " PARTITION BY " . $partitionBySql;
+				$sql .= " PARTITION BY {$partitionBySql} ";
 			}
 		}
 
@@ -31,7 +31,7 @@ class Window extends Expression
 				return $e->getSql($context);
 			}, $this->orderBy)));
 			if ($orderBySql) {
-				$sql .= " ORDER BY " . $orderBySql;
+				$sql .= " ORDER BY {$orderBySql} ";
 			}
 		}
 
