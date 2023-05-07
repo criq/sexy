@@ -26,7 +26,7 @@ class Param extends Expression
 		}
 	}
 
-	public function getSql(&$context = [])
+	public function getSQL(&$context = [])
 	{
 		$useParams = (bool)!(isset($context['useParams']) && !$context['useParams']);
 
@@ -34,7 +34,7 @@ class Param extends Expression
 		if ($this->value instanceof Select) {
 			$this->value->setGetFoundRows(false);
 
-			return $this->value->getSql($context);
+			return $this->value->getSQL($context);
 
 		// Value.
 		} else {
