@@ -45,22 +45,22 @@ class ExpressionCollection extends Expression implements \ArrayAccess, \Countabl
 		}, $this->getExpressions()));
 	}
 
-	public function offsetExists(mixed $offset): bool
+	public function offsetExists($offset)
 	{
 		return isset($this->expressions[$offset]);
 	}
 
-	public function offsetGet(mixed $offset): mixed
+	public function offsetGet($offset)
 	{
 		return $this->expressions[$offset];
 	}
 
-	public function offsetSet(mixed $offset, mixed $value): void
+	public function offsetSet($offset, $value)
 	{
 		$this->expressions[$offset] = $value;
 	}
 
-	public function offsetUnset(mixed $offset): void
+	public function offsetUnset($offset)
 	{
 		unset($this->expressions[$offset]);
 	}
