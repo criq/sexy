@@ -70,27 +70,27 @@ class ExpressionCollection extends Expression implements \ArrayAccess, \Countabl
 		return count($this->getExpressions());
 	}
 
-	public function rewind(): void
+	public function rewind()
 	{
 		$this->iteratorPosition = 0;
 	}
 
-	public function current(): mixed
+	public function current()
 	{
 		return $this->expressions[$this->iteratorPosition];
 	}
 
-	public function key(): mixed
+	public function key()
 	{
 		return $this->iteratorPosition;
 	}
 
-	public function next(): void
+	public function next()
 	{
 		++$this->iteratorPosition;
 	}
 
-	public function valid(): bool
+	public function valid()
 	{
 		return isset($this->expressions[$this->iteratorPosition]);
 	}
