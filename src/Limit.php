@@ -15,6 +15,6 @@ class Limit extends Expression
 
 	public function getSql(&$context = [])
 	{
-		return " LIMIT " . (!is_null($this->limit) ? $this->limit : '18446744073709551615') . (!is_null($this->offset) ? " OFFSET " . $this->offset : null);
+		return " LIMIT " . (!is_null($this->limit) ? $this->limit : "18446744073709551615") . (!is_null($this->offset) ? " OFFSET " . $this->offset : null);
 	}
 }
