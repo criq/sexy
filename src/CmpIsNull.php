@@ -4,6 +4,8 @@ namespace Sexy;
 
 class CmpIsNull extends Expression
 {
+	protected $name;
+
 	public function __construct(Expression $name)
 	{
 		$this->name = $name;
