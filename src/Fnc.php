@@ -8,7 +8,7 @@ class Fnc extends Expression
 	public $arguments;
 	public $function;
 
-	public function __construct(Keyword $function, array $arguments = [], Alias $alias = null)
+	public function __construct(Keyword $function, array $arguments = [], ?Alias $alias = null)
 	{
 		$this->function = $function;
 		$this->arguments = is_array($arguments) ? $arguments : [$arguments];
