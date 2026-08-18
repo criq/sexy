@@ -45,22 +45,22 @@ class ExpressionCollection extends Expression implements \ArrayAccess, \Countabl
 		}, $this->getExpressions()));
 	}
 
-	public function offsetExists($offset)
+	public function offsetExists($offset): bool
 	{
 		return isset($this->expressions[$offset]);
 	}
 
-	public function offsetGet($offset)
+	public function offsetGet($offset): mixed
 	{
 		return $this->expressions[$offset];
 	}
 
-	public function offsetSet($offset, $value)
+	public function offsetSet($offset, $value): void
 	{
 		$this->expressions[$offset] = $value;
 	}
 
-	public function offsetUnset($offset)
+	public function offsetUnset($offset): void
 	{
 		unset($this->expressions[$offset]);
 	}
@@ -70,27 +70,27 @@ class ExpressionCollection extends Expression implements \ArrayAccess, \Countabl
 		return count($this->getExpressions());
 	}
 
-	public function rewind()
+	public function rewind(): void
 	{
 		$this->iteratorPosition = 0;
 	}
 
-	public function current()
+	public function current(): mixed
 	{
 		return $this->expressions[$this->iteratorPosition];
 	}
 
-	public function key()
+	public function key(): mixed
 	{
 		return $this->iteratorPosition;
 	}
 
-	public function next()
+	public function next(): void
 	{
 		++$this->iteratorPosition;
 	}
 
-	public function valid()
+	public function valid(): bool
 	{
 		return isset($this->expressions[$this->iteratorPosition]);
 	}
