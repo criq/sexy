@@ -3,7 +3,7 @@
 	"description": "sexy sql expressions",
 	"type": "library",
 	"require" : {
-		"php": ">=7",
+		"php": ">=8.4",
 		"criq/katu": "^4"
 	},
 	"minimum-stability": "dev",
