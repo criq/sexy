@@ -7,7 +7,7 @@ class GroupBy extends Expression
 	public $direction;
 	public $groupBy;
 
-	public function __construct(Expression $groupBy, Keyword $direction = null)
+	public function __construct(Expression $groupBy, ?Keyword $direction = null)
 	{
 		$this->groupBy = $groupBy;
 		$this->direction = $direction;

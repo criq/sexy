@@ -7,7 +7,7 @@ class Over extends Expression
 	public $expression;
 	public $window;
 
-	public function __construct(Expression $expression, Window $window = null)
+	public function __construct(Expression $expression, ?Window $window = null)
 	{
 		$this->expression = $expression;
 		$this->window = $window;

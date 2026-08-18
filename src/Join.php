@@ -9,7 +9,7 @@ class Join extends Expression
 	public $direction;
 	public $join;
 
-	public function __construct(Expression $join, Expression $conditions = null, Keyword $direction = null, Alias $alias = null)
+	public function __construct(Expression $join, ?Expression $conditions = null, ?Keyword $direction = null, ?Alias $alias = null)
 	{
 		$this->direction = $direction;
 		$this->join = $join;

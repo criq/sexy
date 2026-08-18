@@ -8,7 +8,7 @@ class Cast extends Expression
 	public $expression;
 	public $type;
 
-	public function __construct(Keyword $type, Expression $expression, Alias $alias = null)
+	public function __construct(Keyword $type, Expression $expression, ?Alias $alias = null)
 	{
 		$this->type       = $type;
 		$this->expression = $expression;

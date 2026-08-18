@@ -9,7 +9,7 @@ class GroupConcat extends Expression
 	public $orderBy;
 	public $separator;
 
-	public function __construct(Expression $column, Expression $orderBy = null, $separator = null, $distinct = false)
+	public function __construct(Expression $column, ?Expression $orderBy = null, $separator = null, $distinct = false)
 	{
 		$this->column = $column;
 		$this->orderBy = $orderBy;

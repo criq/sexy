@@ -4,7 +4,7 @@ namespace Sexy;
 
 class Select extends Command
 {
-	public function __construct(Expression $select = null)
+	public function __construct(?Expression $select = null)
 	{
 		if ($select) {
 			$this->select(...func_get_args());
