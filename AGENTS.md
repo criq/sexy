@@ -175,9 +175,12 @@ SX::in($column, [$value1, $value2]) // column IN (value1, value2)
 #### LIKE Operations (`Sexy\CmpLike`)
 ```php
 SX::like($column, $pattern) // column LIKE pattern
-SX::likeAllWords($column, $text) // Multi-word LIKE
-SX::likeAnyWords($column, $text) // Any-word LIKE
+SX::likeAllWords($column, $text) // Multi-word LIKE (auto COLLATE utf8mb4_unicode_ci — diacritic fold)
+SX::likeAnyWords($column, $text) // Any-word LIKE (same auto fold)
+SX::forTextSearch($column) // wrap for plain CmpLike on free-text (czech_ci → unicode_ci fold)
 ```
+
+`cmpLikeAllWords` / `cmpLikeAnyWords` always wrap the left expression with `TextSearch::COLLATION` (`utf8mb4_unicode_ci`) so queries without accents match Czech titles/names. Plain `cmpLike` does **not** auto-wrap (prefix `word%` may use indexes) — call `SX::forTextSearch($column)` when folding is needed.
 
 #### NULL Checks (`Sexy\CmpIsNull`, `Sexy\CmpIsNotNull`)
 ```php

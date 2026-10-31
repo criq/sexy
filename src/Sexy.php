@@ -48,4 +48,13 @@ class Sexy
 	{
 		return new Select(...func_get_args());
 	}
+
+	/**
+	 * Wrap a column/expression for diacritic-insensitive LIKE (unicode_ci).
+	 * Prefer for plain {@see CmpLike} on free-text; multi-word helpers wrap automatically.
+	 */
+	public static function forTextSearch(Expression $expression): Collate
+	{
+		return TextSearch::wrap($expression);
+	}
 }
